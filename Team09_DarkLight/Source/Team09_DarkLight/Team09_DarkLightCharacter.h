@@ -6,29 +6,17 @@
 #include "GameFramework/Character.h"
 #include "Team09_DarkLightCharacter.generated.h"
 
-UCLASS(config=Game)
+UCLASS(config = Game)
 class ATeam09_DarkLightCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
-	/** Side view camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* SideViewCameraComponent;
-
-	/** Camera boom positioning the camera beside the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
 
 protected:
 
 	/** Called for side to side input */
 	void MoveRight(float Val);
 
-	/** Handle touch inputs. */
-	void TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location);
-
-	/** Handle touch stop event. */
-	void TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location);
+	void MoveUp(float Val);
 
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
@@ -38,8 +26,5 @@ protected:
 public:
 	ATeam09_DarkLightCharacter();
 
-	/** Returns SideViewCameraComponent subobject **/
-	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
 };

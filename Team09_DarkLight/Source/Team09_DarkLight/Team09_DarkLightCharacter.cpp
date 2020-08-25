@@ -17,21 +17,6 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	// Create a camera boom attached to the root (capsule)
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->SetUsingAbsoluteRotation(true); // Rotation of the character should not affect rotation of boom
-	CameraBoom->bDoCollisionTest = false;
-	CameraBoom->TargetArmLength = 500.f;
-	CameraBoom->SocketOffset = FVector(0.f,0.f,75.f);
-	CameraBoom->SetRelativeRotation(FRotator(0.f,180.f,0.f));
-
-	// Create a camera and attach to boom
-	SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
-	SideViewCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	SideViewCameraComponent->bUsePawnControlRotation = false; // We don't want the controller rotating the camera
-
-	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Face in the direction we are moving..
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->GravityScale = 2.f;
@@ -54,6 +39,7 @@ void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATeam09_DarkLightCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("MoveUp", this, &ATeam09_DarkLightCharacter::MoveUp);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ATeam09_DarkLightCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ATeam09_DarkLightCharacter::TouchStopped);
@@ -62,7 +48,12 @@ void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent
 void ATeam09_DarkLightCharacter::MoveRight(float Value)
 {
 	// add movement in that direction
-	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
+	AddMovementInput(FVector(0.0f,-1.0f,0.0f), Value);
+}
+
+void ATeam09_DarkLightCharacter::MoveUp(float Value)
+{
+	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
 }
 
 void ATeam09_DarkLightCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
