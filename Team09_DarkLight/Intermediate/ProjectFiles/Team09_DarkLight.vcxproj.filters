@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Team09_DarkLight.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{93D57AAD-16CF-4624-9627-24D17E1DAA8F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Team09_DarkLight.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Team09_DarkLightEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{93BBBF9D-9559-4FAB-8951-F044836B45CD}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Team09_DarkLight">
+      <UniqueIdentifier>{A4526035-BE53-4FC7-8041-D1731BC8FC21}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Team09_DarkLight\Team09_DarkLight.Build.cs">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Team09_DarkLight\Team09_DarkLight.cpp">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Team09_DarkLight\Team09_DarkLight.h">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Team09_DarkLight\Team09_DarkLightCharacter.cpp">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Team09_DarkLight\Team09_DarkLightCharacter.h">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Team09_DarkLight\Team09_DarkLightGameMode.cpp">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Team09_DarkLight\Team09_DarkLightGameMode.h">
+      <Filter>Source\Team09_DarkLight</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

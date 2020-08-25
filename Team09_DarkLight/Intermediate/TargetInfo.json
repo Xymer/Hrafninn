@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Team09_DarkLight",
+			"Path": "C:\\Users\\Sebastian.unland\\Documents\\Unreal Projects\\Team09_DarkLight\\Source\\Team09_DarkLight.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "Team09_DarkLightEditor",
+			"Path": "C:\\Users\\Sebastian.unland\\Documents\\Unreal Projects\\Team09_DarkLight\\Source\\Team09_DarkLightEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
