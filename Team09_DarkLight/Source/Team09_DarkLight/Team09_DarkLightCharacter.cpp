@@ -25,9 +25,6 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -41,8 +38,6 @@ void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATeam09_DarkLightCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ATeam09_DarkLightCharacter::MoveUp);
 
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &ATeam09_DarkLightCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &ATeam09_DarkLightCharacter::TouchStopped);
 }
 
 void ATeam09_DarkLightCharacter::MoveRight(float Value)
@@ -56,14 +51,4 @@ void ATeam09_DarkLightCharacter::MoveUp(float Value)
 	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
 }
 
-void ATeam09_DarkLightCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
-{
-	// jump on any touch
-	Jump();
-}
-
-void ATeam09_DarkLightCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
-{
-	StopJumping();
-}
 

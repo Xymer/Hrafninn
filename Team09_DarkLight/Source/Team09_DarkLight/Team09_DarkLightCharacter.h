@@ -26,5 +26,4 @@ protected:
 public:
 	ATeam09_DarkLightCharacter();
 
-
 };
