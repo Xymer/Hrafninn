@@ -24,8 +24,8 @@ class TEAM09_DARKLIGHT_API IPuzzle
 		// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	virtual void SetKeysToSolve(int TotalKeys);
-	virtual void TryToSolveWithKeys();
+	virtual void SetKeysToSolve();
+	virtual void TryToSolveWithKeys(APawn* pawn);
 	virtual void OnSolved();
 
 };

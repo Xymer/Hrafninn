@@ -19,15 +19,15 @@ class TEAM09_DARKLIGHT_API IPuzzleKey
 
 		// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "Puzzle Key")
 		void OnPickedUp(APawn* Pawn);
 	void OnPickedUp_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "Puzzle Key")
 		void OnDropped();
 	void OnDropped_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "Puzzle Key")
 		void OnTurnIn();
 	void OnTurnIn_Implementation();
 };

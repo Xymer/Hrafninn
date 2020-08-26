@@ -4,12 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <Team09_DarkLight\PuzzleKeyActor.h>
 #include "Team09_DarkLightCharacter.generated.h"
 
 UCLASS(config = Game)
 class ATeam09_DarkLightCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+public:
+	TArray<APuzzleKeyActor*> HeldKeys;
 
 protected:
 
@@ -25,5 +29,7 @@ protected:
 
 public:
 	ATeam09_DarkLightCharacter();
+
+	void PickUpKey(APuzzleKeyActor* KeyToPickup);
 
 };

@@ -5,12 +5,12 @@
 
 // Add default functionality here for any IPuzzle functions that are not pure virtual.
 
-void IPuzzle::SetKeysToSolve(int TotalKeys)
+void IPuzzle::SetKeysToSolve()
 {
 
 }
 
-void IPuzzle::TryToSolveWithKeys()
+void IPuzzle::TryToSolveWithKeys(APawn* pawn)
 {
 
 }

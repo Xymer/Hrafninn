@@ -4,27 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Puzzle.h"
 #include "PuzzleKey.h"
 #include "PuzzleType.h"
-#include "PuzzleActor.generated.h"
+#include "Components/BoxComponent.h"
+#include "PuzzleKeyActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle
+class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey
 {
 	GENERATED_BODY()
-
+private:
+	
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);
 public:
 	// Sets default values for this actor's properties
-	APuzzleActor();
-
+	APuzzleKeyActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TArray<AActor*>  PuzzleKeys;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category = "Puzzle")
 		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::blue;
-
-private:
-	TArray<IPuzzleKey*> Keys;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UBoxComponent* BoxComponent = nullptr;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,15 +32,6 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-public:
-	UFUNCTION(BlueprintCallable)
-		void SetKeysToSolve() override;
-
-
-	void TryToSolveWithKeys(APawn* pawn) override;
-
-
-	void OnSolved() override;
+	
 
 };
