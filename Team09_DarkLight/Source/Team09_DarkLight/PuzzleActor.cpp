@@ -37,7 +37,7 @@ void APuzzleActor::SetKeysToSolve()
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3, FColor::Blue, PuzzleKeys[i]->GetFName().ToString() + " Is not a valid key");
+			GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3, FColor::Blue, PuzzleKeys[i]->GetFName().ToString() + " Is not a valid soul");
 		}
 	}
 }

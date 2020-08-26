@@ -21,7 +21,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		TArray<AActor*>  PuzzleKeys;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category = "Puzzle")
-		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::blue;
+		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::Blue;
 
 private:
 	TArray<IPuzzleKey*> Keys;

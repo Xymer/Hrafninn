@@ -21,7 +21,7 @@ public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::blue;
+		TEnumAsByte<PuzzleType> KeyType = PuzzleType::Red;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
 	

@@ -16,7 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	ARealmObject();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TEnumAsByte<RealmType> RealmType = RealmType::Light;
+		TEnumAsByte<RealmType> Realm = RealmType::Light;
 
 protected:
 	// Called when the game starts or when spawned

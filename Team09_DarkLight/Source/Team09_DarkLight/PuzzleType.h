@@ -10,6 +10,6 @@
 UENUM()
 enum PuzzleType
 {
-	blue = 0,
-	red
+	Red = 0,
+	Blue
 };
