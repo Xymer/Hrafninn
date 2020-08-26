@@ -13,6 +13,7 @@ class ATeam09_DarkLightCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(BlueprintReadOnly)
 	TArray<APuzzleKeyActor*> HeldKeys;
 
 protected:
