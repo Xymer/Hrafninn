@@ -27,6 +27,15 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 }
 
+void ATeam09_DarkLightCharacter::PickUpKey(APuzzleKeyActor* KeyToPickup)
+{
+	if (HeldKeys.Contains(KeyToPickup))
+	{
+		return;
+	}
+	HeldKeys.Add(KeyToPickup);	
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 

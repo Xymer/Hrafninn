@@ -6,33 +6,39 @@
 #include "GameFramework/Actor.h"
 #include "Puzzle.h"
 #include "PuzzleKey.h"
+#include "PuzzleType.h"
 #include "PuzzleActor.generated.h"
 
 UCLASS()
 class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	APuzzleActor();
 
-	UPROPERTY(BlueprintReadWrite,EditAnywhere)
-	TArray<TScriptInterface<IPuzzleKey>>  PuzzleKeys;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		TArray<AActor*>  PuzzleKeys;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category = "Puzzle")
+		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::blue;
 
+private:
+	TArray<IPuzzleKey*> Keys;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 public:
-	void SetKeysToSolve(int TotalKeys) override;
+	UFUNCTION(BlueprintCallable)
+		void SetKeysToSolve() override;
 
 
-	void TryToSolveWithKeys() override;
+	void TryToSolveWithKeys(APawn* pawn) override;
 
 
 	void OnSolved() override;
