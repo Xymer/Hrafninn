@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "RealmType.h"
 #include "RealmObject.generated.h"
 
 UCLASS()
@@ -17,8 +16,6 @@ public:
 	ARealmObject();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TEnumAsByte<RealmType> RealmType = RealmType::Light;
-	   
-
 
 protected:
 	// Called when the game starts or when spawned
