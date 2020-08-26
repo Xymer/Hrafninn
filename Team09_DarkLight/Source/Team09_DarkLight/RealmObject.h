@@ -17,7 +17,7 @@ public:
 	ARealmObject();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TEnumAsByte<RealmType> RealmType = RealmType::Light;
-	
+	   
 
 
 protected:
