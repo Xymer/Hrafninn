@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "RealmType.h"
 #include "RealmObject.generated.h"
 
 UCLASS()
