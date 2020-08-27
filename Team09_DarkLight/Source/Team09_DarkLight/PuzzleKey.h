@@ -28,6 +28,6 @@ public:
 	void OnDropped_Implementation();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Puzzle Key")
-		void OnTurnIn();
+		void OnTurnIn(AActor* Lantern);
 	void OnTurnIn_Implementation();
 };

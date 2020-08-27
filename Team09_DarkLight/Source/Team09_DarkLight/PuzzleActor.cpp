@@ -2,6 +2,7 @@
 
 
 #include "PuzzleActor.h"
+#include "Team09_DarkLightCharacter.h"
 #include <Math/Color.h>
 
 // Sets default values
@@ -9,7 +10,9 @@ APuzzleActor::APuzzleActor()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	TriggerBox->SetGenerateOverlapEvents(true);
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APuzzleActor::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -33,11 +36,41 @@ void APuzzleActor::SetKeysToSolve()
 
 void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
 {
- 
+	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(pawn);
+	TArray<APuzzleKeyActor*> ToRemoveActors;
+	if (player->HeldKeys.Num() > 0)
+	{
+		for(APuzzleKeyActor* Soul : player->HeldKeys)
+		{
+			if (Soul->TypeOfRealm == TypeOfRealm)
+			{
+				Soul->Execute_OnTurnIn(Soul,Cast<AActor>(this));
+				TotalSoulsTurnedIn++;
+				ToRemoveActors.Add(Soul);			
+			}
+		}
+		for (APuzzleKeyActor* Soul : ToRemoveActors)
+		{
+			player->HeldKeys.Remove(Soul);
+		}
+		ToRemoveActors.Empty();
+	}
+	if (TotalSoulsTurnedIn == TotalSoulsNeeded)
+	{
+		//TODO: Open the gates
+	}
+	
 }
 
-void APuzzleActor::OnSolved()
+void APuzzleActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(OtherActor);
+	if (player != NULL)
+	{
+		TryToSolveWithKeys(player);
+	}
+
 }
+
+
 
