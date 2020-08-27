@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Puzzle.h"
 #include "PuzzleKey.h"
+#include "Team09_DarkLight\RealmType.h"
 #include "PuzzleType.h"
 #include "PuzzleActor.generated.h"
 
@@ -20,8 +21,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		TArray<AActor*>  PuzzleKeys;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category = "Puzzle")
-		TEnumAsByte<PuzzleType> TypeOfPuzzle = PuzzleType::Blue;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
 
 private:
 	TArray<IPuzzleKey*> Keys;
