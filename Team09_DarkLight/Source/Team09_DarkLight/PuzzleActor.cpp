@@ -28,18 +28,7 @@ void APuzzleActor::Tick(float DeltaTime)
 
 void APuzzleActor::SetKeysToSolve()
 {	
-	for (int i = 0; i < PuzzleKeys.Num(); i++)
-	{
-		IPuzzleKey* Key = Cast<IPuzzleKey>(PuzzleKeys[i]);
-		if (Key != NULL)
-		{
-		Keys.Add(Key);
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3, FColor::Blue, PuzzleKeys[i]->GetFName().ToString() + " Is not a valid soul");
-		}
-	}
+	
 }
 
 void APuzzleActor::TryToSolveWithKeys(APawn* pawn)

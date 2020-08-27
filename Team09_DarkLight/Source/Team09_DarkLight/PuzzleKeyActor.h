@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PuzzleKey.h"
-#include "PuzzleType.h"
+#include "RealmType.h"
 #include "Components/BoxComponent.h"
 #include "PuzzleKeyActor.generated.h"
 
@@ -21,7 +21,7 @@ public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<PuzzleType> KeyType = PuzzleType::Red;
+		TEnumAsByte<RealmType> KeyType = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
 	
