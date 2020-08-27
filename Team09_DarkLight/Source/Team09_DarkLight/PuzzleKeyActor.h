@@ -21,7 +21,7 @@ public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<RealmType> KeyType = RealmType::Dark;
+		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
 	
@@ -33,5 +33,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-
 };

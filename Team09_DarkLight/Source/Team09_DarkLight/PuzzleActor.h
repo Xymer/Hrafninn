@@ -8,6 +8,7 @@
 #include "PuzzleKey.h"
 #include "Team09_DarkLight\RealmType.h"
 #include "PuzzleType.h"
+#include "Components/BoxComponent.h"
 #include "PuzzleActor.generated.h"
 
 UCLASS()
@@ -18,11 +19,17 @@ class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle
 public:
 	// Sets default values for this actor's properties
 	APuzzleActor();
+	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+	UBoxComponent* TriggerBox = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TArray<AActor*>  PuzzleKeys;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		int TotalSoulsNeeded = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Puzzle")
+		int TotalSoulsTurnedIn = 0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		AActor* GateToOpen = nullptr;
 
 private:
 	TArray<IPuzzleKey*> Keys;
@@ -38,10 +45,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetKeysToSolve() override;
 
-
+	UFUNCTION(BlueprintCallable)
 	void TryToSolveWithKeys(APawn* pawn) override;
 
 
-	void OnSolved() override;
+	void OnSolved();
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);
 
 };
