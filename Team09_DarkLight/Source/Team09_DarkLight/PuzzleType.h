@@ -7,7 +7,7 @@
 /**
  * 
  */
-UENUM()
+UENUM(BlueprintType)
 enum PuzzleType
 {
 	Red = 0,
