@@ -20,6 +20,7 @@ APuzzleKeyActor::APuzzleKeyActor()
 void APuzzleKeyActor::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 // Called every frame
@@ -34,6 +35,7 @@ void APuzzleKeyActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	if (player != nullptr)
 	{
 		player->PickUpKey(this);
+		bIsPickedUp = true;
 		Execute_OnPickedUp(this,Cast<APawn>(player));
 	}
 }

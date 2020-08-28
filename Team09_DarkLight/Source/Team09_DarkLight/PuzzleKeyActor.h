@@ -21,12 +21,15 @@ private:
 public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> TypeOfSoul = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		bool bIsAffectedByRealm = false;
+	bool bIsPickedUp = false;
 	
 protected:
 	// Called when the game starts or when spawned

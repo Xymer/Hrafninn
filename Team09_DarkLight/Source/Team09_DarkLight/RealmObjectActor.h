@@ -16,8 +16,10 @@ class TEAM09_DARKLIGHT_API ARealmObjectActor : public AActor, public IRealmObjec
 public:	
 	// Sets default values for this actor's properties
 	ARealmObjectActor();
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Light;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		bool bIsAffectedByRealm = false;
 
 protected:
 	// Called when the game starts or when spawned

@@ -24,6 +24,10 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 	APuzzleActor* PuzzleActor = Cast<APuzzleActor>(this);
 	if (RealmActor != nullptr)
 	{
+		if (!RealmActor->bIsAffectedByRealm)
+		{
+			return;
+		}
 		UStaticMeshComponent* mesh = RealmActor->FindComponentByClass<UStaticMeshComponent>();
 		mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
 		if (RealmActor->VisibleRealm == CurrentRealm)
@@ -37,6 +41,10 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 	}
 	else if (PuzzleKeyActor != nullptr)
 	{
+		if (PuzzleKeyActor->bIsPickedUp || !PuzzleKeyActor->bIsAffectedByRealm)
+		{
+			return;
+		}
 		UStaticMeshComponent* mesh = PuzzleKeyActor->FindComponentByClass<UStaticMeshComponent>();
 		mesh->SetVisibility(PuzzleKeyActor->VisibleRealm == CurrentRealm);
 		if (PuzzleKeyActor->VisibleRealm == CurrentRealm)
@@ -50,6 +58,10 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 	}
 	else if (PuzzleActor != nullptr)
 	{
+		if (!PuzzleActor->bIsAffectedByRealm)
+		{
+			return;
+		}
 		UStaticMeshComponent* mesh = PuzzleActor->FindComponentByClass<UStaticMeshComponent>();
 		mesh->SetVisibility(PuzzleActor->VisibleRealm == CurrentRealm);
 		if (PuzzleActor->VisibleRealm == CurrentRealm)

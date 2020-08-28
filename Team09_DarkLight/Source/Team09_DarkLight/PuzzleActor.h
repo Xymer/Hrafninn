@@ -23,14 +23,16 @@ public:
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	UBoxComponent* TriggerBox = nullptr;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> TypeOfSoul = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		int TotalSoulsNeeded = 1;
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category = "Puzzle")
 		int TotalSoulsTurnedIn = 0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		bool bIsAffectedByRealm = false;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		AActor* GateToOpen = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
