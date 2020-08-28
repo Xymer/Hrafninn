@@ -15,6 +15,8 @@ APuzzleActor::APuzzleActor()
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APuzzleActor::OnOverlapBegin);
 }
 
+
+
 // Called when the game starts or when spawned
 void APuzzleActor::BeginPlay()
 {
