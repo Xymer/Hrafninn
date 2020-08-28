@@ -21,7 +21,9 @@ public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
+		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		TEnumAsByte<RealmType> TypeOfSoul = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
 	
