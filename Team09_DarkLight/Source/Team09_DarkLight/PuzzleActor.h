@@ -26,7 +26,7 @@ public:
 		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		int TotalSoulsNeeded = 1;
-	UPROPERTY(BlueprintReadOnly, Category = "Puzzle")
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category = "Puzzle")
 		int TotalSoulsTurnedIn = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		AActor* GateToOpen = nullptr;
