@@ -9,11 +9,11 @@
 #include "Team09_DarkLight\RealmType.h"
 #include "PuzzleType.h"
 #include "Components/BoxComponent.h"
-
+#include "RealmObject.h"
 #include "PuzzleActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle
+class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle, public IRealmObject
 {
 	GENERATED_BODY()
 
@@ -35,6 +35,7 @@ public:
 		AActor* GateToOpen = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		TArray<AActor*> LiftableObjects;
+
 
 private:
 	TArray<IPuzzleKey*> Keys;
