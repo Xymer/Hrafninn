@@ -7,10 +7,11 @@
 #include "PuzzleKey.h"
 #include "RealmType.h"
 #include "Components/BoxComponent.h"
+#include "RealmObject.h"
 #include "PuzzleKeyActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey
+class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey,public IRealmObject
 {
 	GENERATED_BODY()
 private:
