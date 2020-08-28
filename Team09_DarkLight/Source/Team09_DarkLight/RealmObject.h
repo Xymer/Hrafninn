@@ -2,13 +2,14 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "RealmType.h"
 #include "RealmObject.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI,BlueprintType)
 class URealmObject : public UInterface
 {
 	GENERATED_BODY()
