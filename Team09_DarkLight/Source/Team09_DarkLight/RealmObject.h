@@ -3,27 +3,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "RealmType.h"
+#include "UObject/Interface.h"
 #include "RealmObject.generated.h"
 
-UCLASS()
-class TEAM09_DARKLIGHT_API ARealmObject : public AActor
+// This class does not need to be modified.
+UINTERFACE(MinimalAPI)
+class URealmObject : public UInterface
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ARealmObject();
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TEnumAsByte<RealmType> Realm = RealmType::Light;
+};
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+/**
+ * 
+ */
+class TEAM09_DARKLIGHT_API IRealmObject
+{
+	GENERATED_BODY()
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
+public:
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		void OnSwapRealm();
+	void OnSwapRealm_Implementation();
 };

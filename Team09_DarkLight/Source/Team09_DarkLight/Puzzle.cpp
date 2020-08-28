@@ -14,3 +14,7 @@ void IPuzzle::TryToSolveWithKeys(APawn* pawn)
 {
 
 }
+
+void IPuzzle::OnSolved_Implementation()
+{
+}

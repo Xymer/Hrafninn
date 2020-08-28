@@ -9,6 +9,7 @@
 #include "Team09_DarkLight\RealmType.h"
 #include "PuzzleType.h"
 #include "Components/BoxComponent.h"
+
 #include "PuzzleActor.generated.h"
 
 UCLASS()
@@ -23,13 +24,17 @@ public:
 	UBoxComponent* TriggerBox = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
+		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		TEnumAsByte<RealmType> TypeOfSoul = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		int TotalSoulsNeeded = 1;
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category = "Puzzle")
 		int TotalSoulsTurnedIn = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		AActor* GateToOpen = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+		TArray<AActor*> LiftableObjects;
 
 private:
 	TArray<IPuzzleKey*> Keys;
@@ -47,9 +52,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TryToSolveWithKeys(APawn* pawn) override;
-
-
-	void OnSolved();
 
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);

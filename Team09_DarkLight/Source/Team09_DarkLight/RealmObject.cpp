@@ -3,25 +3,9 @@
 
 #include "RealmObject.h"
 
-// Sets default values
-ARealmObject::ARealmObject()
+// Add default functionality here for any IRealmObject functions that are not pure virtual.
+
+void IRealmObject::OnSwapRealm_Implementation()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
 }
-
-// Called when the game starts or when spawned
-void ARealmObject::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ARealmObject::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

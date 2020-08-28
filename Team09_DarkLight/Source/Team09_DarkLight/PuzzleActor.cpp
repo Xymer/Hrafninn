@@ -42,7 +42,7 @@ void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
 	{
 		for(APuzzleKeyActor* Soul : player->HeldKeys)
 		{
-			if (Soul->TypeOfRealm == TypeOfRealm)
+			if (Soul->TypeOfSoul == TypeOfSoul)
 			{
 				Soul->Execute_OnTurnIn(Soul,Cast<AActor>(this));
 				TotalSoulsTurnedIn++;
@@ -58,6 +58,9 @@ void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
 	if (TotalSoulsTurnedIn == TotalSoulsNeeded)
 	{
 		//TODO: Open the gates
+		//TODO: Light up the Lantern
+		//TODO: Make liftable object unliftable
+		Execute_OnSolved(this);
 	}
 	
 }
