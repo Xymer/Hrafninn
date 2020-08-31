@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#include "Grabbing_Component.h"
 #include <DrawDebugHelpers.h>
 #include "Team09_DarkLightCharacter.h"
 #include <Components/ActorComponent.h>
 #include <Engine/Engine.h>
 #include <Math/Rotator.h>
-#include "Grabbing_Component.h"
+
 
 
 
@@ -26,8 +27,12 @@ UGrabbing_Component::UGrabbing_Component()
 void UGrabbing_Component::BeginPlay()
 {
 	Super::BeginPlay();
-	CheckForPhysicsHandler();	
+	CheckForPhysicsHandler();
+	InputHandling();
+}
 
+void UGrabbing_Component::InputHandling()
+{
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 
 	if (InputComponent)
@@ -42,11 +47,7 @@ void UGrabbing_Component::CheckForPhysicsHandler()
 
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
-	if (PhysicsHandle)
-	{
-		//Physics Handle Component found
-	}
-	else
+	if (PhysicsHandle == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No physics handle component on %s"), *GetOwner()->GetName());
 	}
@@ -55,13 +56,11 @@ void UGrabbing_Component::CheckForPhysicsHandler()
 void UGrabbing_Component::PushPull()
 {
 	GetObjectInReach();
-	GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Green, FString("PushPull pressed"), true);
 }
 
 void UGrabbing_Component::StopPushPull()
 {
-	/*PhysicsHandle->ReleaseComponent();*/
-	GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Green, FString("PushPull released"), true);
+	PhysicsHandle->ReleaseComponent();
 }
 
 FHitResult UGrabbing_Component::GetObjectInReach()
@@ -72,12 +71,11 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 	{
 		FHitResult ItemHit;
 		FVector StartLineTrace;
-		FVector RotatingLineTrace = GetOwner()->GetActorForwardVector();
 		FRotator RotatelineTrace = GetOwner()->GetActorRotation();
 
 		CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
 
-		FVector EndofLineTrace = StartLineTrace + GetOwner()->GetActorForwardVector() * Reach;
+		FVector EndofLineTrace = StartLineTrace + RotatelineTrace.Vector() * Reach;
 
 		FCollisionQueryParams TraceQueryParams;
 		TraceQueryParams.AddIgnoredActor(CurrentOwner);
@@ -94,7 +92,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 			{
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, EndofLineTrace, RotatelineTrace);
 				GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);
-				UE_LOG(LogTemp, Warning, TEXT("Trace has hit: %s"), *(Actorhit->GetName()));
 			}
 
 		}
@@ -108,20 +105,21 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 void UGrabbing_Component::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	UpdateGrabbedItemLocationAndRotation();
+}
 
-
+void UGrabbing_Component::UpdateGrabbedItemLocationAndRotation()
+{
 	AActor* CurrentOwner = GetOwner();
 	FVector StartLineTrace;
-	FVector RotatingLineTrace = GetOwner()->GetActorForwardVector();
 	FRotator RotatelineTrace = CurrentOwner->GetActorRotation();
 
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
 
-	FVector EndofLineTrace = StartLineTrace + GetOwner()->GetActorForwardVector() * Reach;
+	FVector EndofLineTrace = StartLineTrace + RotatelineTrace.Vector() * Reach;
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace, RotatelineTrace);
-
 	}
 }
 
