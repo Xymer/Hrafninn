@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PuzzleKey.h"
+#include "SoulInterface.h"
 #include "RealmType.h"
 #include "Components/BoxComponent.h"
 #include "RealmObject.h"
-#include "PuzzleKeyActor.generated.h"
+#include "SoulActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey,public IRealmObject
+class TEAM09_DARKLIGHT_API ASoulActor : public AActor, public ISoulInterface,public IRealmObject
 {
 	GENERATED_BODY()
 private:
@@ -20,7 +20,7 @@ private:
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);
 public:
 	// Sets default values for this actor's properties
-	APuzzleKeyActor();
+	ASoulActor();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")

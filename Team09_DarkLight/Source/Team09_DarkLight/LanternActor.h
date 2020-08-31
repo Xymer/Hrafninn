@@ -4,22 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Puzzle.h"
-#include "PuzzleKey.h"
+#include "LanternInterface.h"
+#include "SoulInterface.h"
 #include "Team09_DarkLight\RealmType.h"
 #include "PuzzleType.h"
 #include "Components/BoxComponent.h"
 #include "RealmObject.h"
-#include "PuzzleActor.generated.h"
+#include "LanternActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleActor : public AActor, public IPuzzle, public IRealmObject
+class TEAM09_DARKLIGHT_API ALanternActor : public AActor, public ILanternInterface, public IRealmObject
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	APuzzleActor();
+	ALanternActor();
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	UBoxComponent* TriggerBox = nullptr;
 
@@ -40,7 +40,7 @@ public:
 
 
 private:
-	TArray<IPuzzleKey*> Keys;
+	TArray<ISoulInterface*> Keys;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

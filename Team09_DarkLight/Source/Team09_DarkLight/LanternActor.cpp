@@ -1,48 +1,48 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PuzzleActor.h"
+#include "LanternActor.h"
 #include "Team09_DarkLightCharacter.h"
 #include <Math/Color.h>
 
 // Sets default values
-APuzzleActor::APuzzleActor()
+ALanternActor::ALanternActor()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetGenerateOverlapEvents(true);
-	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APuzzleActor::OnOverlapBegin);
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);
 }
 
 
 
 // Called when the game starts or when spawned
-void APuzzleActor::BeginPlay()
+void ALanternActor::BeginPlay()
 {
 	Super::BeginPlay();
 
 }
 
 // Called every frame
-void APuzzleActor::Tick(float DeltaTime)
+void ALanternActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void APuzzleActor::SetKeysToSolve()
+void ALanternActor::SetKeysToSolve()
 {	
 	
 }
 
-void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
+void ALanternActor::TryToSolveWithKeys(APawn* pawn)
 {
 	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(pawn);
-	TArray<APuzzleKeyActor*> ToRemoveActors;
-	if (player->HeldKeys.Num() > 0)
+	TArray<ASoulActor*> ToRemoveActors;
+	if (player->HeldSouls.Num() > 0)
 	{
-		for(APuzzleKeyActor* Soul : player->HeldKeys)
+		for(ASoulActor* Soul : player->HeldSouls)
 		{
 			if (Soul->TypeOfSoul == TypeOfSoul)
 			{
@@ -51,9 +51,9 @@ void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
 				ToRemoveActors.Add(Soul);			
 			}
 		}
-		for (APuzzleKeyActor* Soul : ToRemoveActors)
+		for (ASoulActor* Soul : ToRemoveActors)
 		{
-			player->HeldKeys.Remove(Soul);
+			player->HeldSouls.Remove(Soul);
 		}
 		ToRemoveActors.Empty();
 	}
@@ -67,7 +67,7 @@ void APuzzleActor::TryToSolveWithKeys(APawn* pawn)
 	
 }
 
-void APuzzleActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
+void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
 	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(OtherActor);
 	if (player != NULL)

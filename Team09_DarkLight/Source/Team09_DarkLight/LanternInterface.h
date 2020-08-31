@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "Puzzle.generated.h"
+#include "LanternInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI, Blueprintable, BlueprintType)
-class UPuzzle : public UInterface
+class ULanternInterface : public UInterface
 {
 	GENERATED_BODY()
 
@@ -17,7 +17,7 @@ class UPuzzle : public UInterface
 /**
  *
  */
-class TEAM09_DARKLIGHT_API IPuzzle
+class TEAM09_DARKLIGHT_API ILanternInterface
 {
 	GENERATED_BODY()
 

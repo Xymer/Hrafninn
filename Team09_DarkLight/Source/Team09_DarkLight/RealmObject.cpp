@@ -4,8 +4,8 @@
 #include "RealmObject.h"
 #include "Kismet/GameplayStatics.h"
 #include "RealmObjectActor.h"
-#include "PuzzleKeyActor.h"
-#include "PuzzleActor.h"
+#include "SoulActor.h"
+#include "LanternActor.h"
 #include <Components/StaticMeshComponent.h>
 
 
@@ -20,8 +20,8 @@ void IRealmObject::OnSwapRealm_Implementation(RealmType CurrentRealm)
 void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 {
 	ARealmObjectActor* RealmActor = Cast<ARealmObjectActor>(this);
-	APuzzleKeyActor* PuzzleKeyActor = Cast<APuzzleKeyActor>(this);
-	APuzzleActor* PuzzleActor = Cast<APuzzleActor>(this);
+	ASoulActor* PuzzleKeyActor = Cast<ASoulActor>(this);
+	ALanternActor* PuzzleActor = Cast<ALanternActor>(this);
 	if (RealmActor != nullptr)
 	{
 		if (!RealmActor->bIsAffectedByRealm)

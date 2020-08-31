@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "PuzzleKey.generated.h"
+#include "SoulInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI, Blueprintable, BlueprintType)
-class UPuzzleKey : public UInterface
+class USoulInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class TEAM09_DARKLIGHT_API IPuzzleKey
+class TEAM09_DARKLIGHT_API ISoulInterface
 {
 	GENERATED_BODY()
 

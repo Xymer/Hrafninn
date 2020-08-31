@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include <Team09_DarkLight\PuzzleKeyActor.h>
+#include "SoulActor.h"
 #include "Team09_DarkLightCharacter.generated.h"
 
 UCLASS(config = Game)
@@ -14,7 +14,7 @@ class ATeam09_DarkLightCharacter : public ACharacter
 
 public:
 	UPROPERTY(BlueprintReadOnly)
-	TArray<APuzzleKeyActor*> HeldKeys;
+	TArray<ASoulActor*> HeldSouls;
 
 protected:
 
@@ -31,6 +31,6 @@ protected:
 public:
 	ATeam09_DarkLightCharacter();
 
-	void PickUpKey(APuzzleKeyActor* KeyToPickup);
+	void PickUpKey(ASoulActor* SoulToPickup);
 
 };
