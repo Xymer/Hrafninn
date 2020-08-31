@@ -8,7 +8,7 @@
 #include "RealmObject.h"
 #include "RealmObjectActor.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable,BlueprintType)
 class TEAM09_DARKLIGHT_API ARealmObjectActor : public AActor, public IRealmObject
 {
 	GENERATED_BODY()
@@ -19,8 +19,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Light;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
-		bool bIsAffectedByRealm = false;
-
+		bool bIsAffectedByRealm = true;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

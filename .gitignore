@@ -72,3 +72,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Team09_DarkLight/Source/Team09_DarkLight/TP_SideScroller/TP_SideScrollerGameMode.cpp
+Team09_DarkLight/Source/Team09_DarkLight/TP_SideScroller/TP_SideScrollerGameMode.h
+Team09_DarkLight/Source/Team09_DarkLight/TP_SideScroller/TP_SideScroller.h
+Team09_DarkLight/Source/Team09_DarkLight/TP_SideScroller/TP_SideScrollerCharacter.cpp
+Team09_DarkLight/Source/Team09_DarkLight/TP_SideScroller/TP_SideScrollerCharacter.h

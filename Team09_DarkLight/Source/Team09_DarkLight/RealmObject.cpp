@@ -4,8 +4,8 @@
 #include "RealmObject.h"
 #include "Kismet/GameplayStatics.h"
 #include "RealmObjectActor.h"
-#include "PuzzleKeyActor.h"
-#include "PuzzleActor.h"
+#include "SoulActor.h"
+#include "LanternActor.h"
 #include <Components/StaticMeshComponent.h>
 
 
@@ -20,15 +20,17 @@ void IRealmObject::OnSwapRealm_Implementation(RealmType CurrentRealm)
 void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 {
 	ARealmObjectActor* RealmActor = Cast<ARealmObjectActor>(this);
-	APuzzleKeyActor* PuzzleKeyActor = Cast<APuzzleKeyActor>(this);
-	APuzzleActor* PuzzleActor = Cast<APuzzleActor>(this);
+	ASoulActor* PuzzleKeyActor = Cast<ASoulActor>(this);
+	ALanternActor* PuzzleActor = Cast<ALanternActor>(this);
 	if (RealmActor != nullptr)
 	{
 		if (!RealmActor->bIsAffectedByRealm)
 		{
 			return;
 		}
+		
 		UStaticMeshComponent* mesh = RealmActor->FindComponentByClass<UStaticMeshComponent>();
+
 		mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
 		if (RealmActor->VisibleRealm == CurrentRealm)
 		{
@@ -46,14 +48,17 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 			return;
 		}
 		UStaticMeshComponent* mesh = PuzzleKeyActor->FindComponentByClass<UStaticMeshComponent>();
+		UBoxComponent* box = PuzzleKeyActor->FindComponentByClass<UBoxComponent>();
 		mesh->SetVisibility(PuzzleKeyActor->VisibleRealm == CurrentRealm);
 		if (PuzzleKeyActor->VisibleRealm == CurrentRealm)
 		{
 			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+			box->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		}
 		else
 		{
 			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			box->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
 	else if (PuzzleActor != nullptr)
