@@ -7,10 +7,11 @@
 #include "PuzzleKey.h"
 #include "RealmType.h"
 #include "Components/BoxComponent.h"
+#include "RealmObject.h"
 #include "PuzzleKeyActor.generated.h"
 
 UCLASS()
-class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey
+class TEAM09_DARKLIGHT_API APuzzleKeyActor : public AActor, public IPuzzleKey,public IRealmObject
 {
 	GENERATED_BODY()
 private:
@@ -20,10 +21,15 @@ private:
 public:
 	// Sets default values for this actor's properties
 	APuzzleKeyActor();
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		TEnumAsByte<RealmType> TypeOfRealm = RealmType::Dark;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		TEnumAsByte<RealmType> VisibleRealm = RealmType::Dark;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		TEnumAsByte<RealmType> TypeOfSoul = RealmType::Dark;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		bool bIsAffectedByRealm = false;
+	bool bIsPickedUp = false;
 	
 protected:
 	// Called when the game starts or when spawned

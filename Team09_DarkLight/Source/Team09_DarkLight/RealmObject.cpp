@@ -2,26 +2,76 @@
 
 
 #include "RealmObject.h"
+#include "Kismet/GameplayStatics.h"
+#include "RealmObjectActor.h"
+#include "PuzzleKeyActor.h"
+#include "PuzzleActor.h"
+#include <Components/StaticMeshComponent.h>
 
-// Sets default values
-ARealmObject::ARealmObject()
+
+// Add default functionality here for any IRealmObject functions that are not pure virtual.
+
+
+void IRealmObject::OnSwapRealm_Implementation(RealmType CurrentRealm)
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	SwapVisibility(CurrentRealm);
 }
 
-// Called when the game starts or when spawned
-void ARealmObject::BeginPlay()
+void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 {
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ARealmObject::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	ARealmObjectActor* RealmActor = Cast<ARealmObjectActor>(this);
+	APuzzleKeyActor* PuzzleKeyActor = Cast<APuzzleKeyActor>(this);
+	APuzzleActor* PuzzleActor = Cast<APuzzleActor>(this);
+	if (RealmActor != nullptr)
+	{
+		if (!RealmActor->bIsAffectedByRealm)
+		{
+			return;
+		}
+		UStaticMeshComponent* mesh = RealmActor->FindComponentByClass<UStaticMeshComponent>();
+		mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
+		if (RealmActor->VisibleRealm == CurrentRealm)
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		}
+		else
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+	else if (PuzzleKeyActor != nullptr)
+	{
+		if (PuzzleKeyActor->bIsPickedUp || !PuzzleKeyActor->bIsAffectedByRealm)
+		{
+			return;
+		}
+		UStaticMeshComponent* mesh = PuzzleKeyActor->FindComponentByClass<UStaticMeshComponent>();
+		mesh->SetVisibility(PuzzleKeyActor->VisibleRealm == CurrentRealm);
+		if (PuzzleKeyActor->VisibleRealm == CurrentRealm)
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		}
+		else
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+	else if (PuzzleActor != nullptr)
+	{
+		if (!PuzzleActor->bIsAffectedByRealm)
+		{
+			return;
+		}
+		UStaticMeshComponent* mesh = PuzzleActor->FindComponentByClass<UStaticMeshComponent>();
+		mesh->SetVisibility(PuzzleActor->VisibleRealm == CurrentRealm);
+		if (PuzzleActor->VisibleRealm == CurrentRealm)
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		}
+		else
+		{
+			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
 }
 
