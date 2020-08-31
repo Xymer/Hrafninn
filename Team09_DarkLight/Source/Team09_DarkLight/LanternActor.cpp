@@ -4,6 +4,7 @@
 #include "LanternActor.h"
 #include "Team09_DarkLightCharacter.h"
 #include <Math/Color.h>
+#include <Containers/UnrealString.h>
 
 // Sets default values
 ALanternActor::ALanternActor()
@@ -13,6 +14,7 @@ ALanternActor::ALanternActor()
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetGenerateOverlapEvents(true);
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);
+
 }
 
 
@@ -21,19 +23,34 @@ ALanternActor::ALanternActor()
 void ALanternActor::BeginPlay()
 {
 	Super::BeginPlay();
+	TArray<UPointLightComponent*> children;
+	GetComponents(children);
 
+	for (UPointLightComponent* child : children)
+	{
+		if (child != nullptr)
+		{
+			PointLightComponent = child;
+		}
+	}
+	IncreaseIntensityBy = PointLightComponent->Intensity / TotalSoulsNeeded;
+	PointLightComponent->SetIntensity(0);
 }
 
 // Called every frame
 void ALanternActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (CurrentIntensity >= PointLightComponent->Intensity)
+	{
+		PointLightComponent->SetIntensity(FMath::FInterpTo(PointLightComponent->Intensity,CurrentIntensity,DeltaTime,IntensityLerpSpeed));		
+		GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString::SanitizeFloat(PointLightComponent->Intensity), true);
+	}
 }
 
 void ALanternActor::SetKeysToSolve()
-{	
-	
+{
+
 }
 
 void ALanternActor::TryToSolveWithKeys(APawn* pawn)
@@ -42,13 +59,14 @@ void ALanternActor::TryToSolveWithKeys(APawn* pawn)
 	TArray<ASoulActor*> ToRemoveActors;
 	if (player->HeldSouls.Num() > 0)
 	{
-		for(ASoulActor* Soul : player->HeldSouls)
+		for (ASoulActor* Soul : player->HeldSouls)
 		{
 			if (Soul->TypeOfSoul == TypeOfSoul)
 			{
-				Soul->Execute_OnTurnIn(Soul,Cast<AActor>(this));
+				Soul->Execute_OnTurnIn(Soul, Cast<AActor>(this));
 				TotalSoulsTurnedIn++;
-				ToRemoveActors.Add(Soul);			
+				IncreaseIntensity(IncreaseIntensityBy);
+				ToRemoveActors.Add(Soul);
 			}
 		}
 		for (ASoulActor* Soul : ToRemoveActors)
@@ -59,12 +77,15 @@ void ALanternActor::TryToSolveWithKeys(APawn* pawn)
 	}
 	if (TotalSoulsTurnedIn == TotalSoulsNeeded)
 	{
-		//TODO: Open the gates
+		if (GateToOpen)
+		{
+			GateToOpen->Execute_OnOpen(GateToOpen);
+		}
 		//TODO: Light up the Lantern
 		//TODO: Make liftable object unliftable
 		Execute_OnSolved(this);
 	}
-	
+
 }
 
 void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
@@ -75,6 +96,14 @@ void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 		TryToSolveWithKeys(player);
 	}
 
+}
+
+void ALanternActor::IncreaseIntensity(float Value)
+{
+	if (TotalSoulsNeeded >= TotalSoulsTurnedIn)
+	{
+		CurrentIntensity += Value;		
+	}
 }
 
 

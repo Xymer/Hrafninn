@@ -25,3 +25,13 @@ void AGateActor::Tick(float DeltaTime)
 
 }
 
+void AGateActor::OpenDoor()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void AGateActor::CloseDoor()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
