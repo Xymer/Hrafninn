@@ -28,7 +28,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UBoxComponent* BoxComponent = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
-		bool bIsAffectedByRealm = false;
+		bool bIsAffectedByRealm = true;
 	bool bIsPickedUp = false;
 	
 protected:

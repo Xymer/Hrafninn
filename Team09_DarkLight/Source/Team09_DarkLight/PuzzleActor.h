@@ -32,7 +32,7 @@ public:
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category = "Puzzle")
 		int TotalSoulsTurnedIn = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
-		bool bIsAffectedByRealm = false;
+		bool bIsAffectedByRealm = true;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		AActor* GateToOpen = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")

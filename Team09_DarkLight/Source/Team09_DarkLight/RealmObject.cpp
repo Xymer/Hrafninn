@@ -28,7 +28,9 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 		{
 			return;
 		}
+		
 		UStaticMeshComponent* mesh = RealmActor->FindComponentByClass<UStaticMeshComponent>();
+
 		mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
 		if (RealmActor->VisibleRealm == CurrentRealm)
 		{
@@ -46,14 +48,17 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 			return;
 		}
 		UStaticMeshComponent* mesh = PuzzleKeyActor->FindComponentByClass<UStaticMeshComponent>();
+		UBoxComponent* box = PuzzleKeyActor->FindComponentByClass<UBoxComponent>();
 		mesh->SetVisibility(PuzzleKeyActor->VisibleRealm == CurrentRealm);
 		if (PuzzleKeyActor->VisibleRealm == CurrentRealm)
 		{
 			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+			box->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		}
 		else
 		{
 			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			box->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
 	else if (PuzzleActor != nullptr)
