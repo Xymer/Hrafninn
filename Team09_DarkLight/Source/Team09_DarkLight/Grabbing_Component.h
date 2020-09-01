@@ -39,7 +39,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
 		float Reach = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Drag Helper Value")
+	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
 		float UpdateLocationHelper = 10.f;
 
 

@@ -97,7 +97,7 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 			}
 
 		}
-		//DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
+		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
 	}
 	return FHitResult();
 }
