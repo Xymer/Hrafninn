@@ -41,13 +41,12 @@ public:
 		TArray<AActor*> LiftableObjects;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		UPointLightComponent* PointLightComponent = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Puzzle")
 		float IncreaseIntensityBy = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		float IntensityLerpSpeed = 10;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Puzzle")
 		float CurrentIntensity = 0;
-
 
 private:
 	TArray<ISoulInterface*> Keys;

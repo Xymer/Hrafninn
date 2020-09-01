@@ -8,30 +8,27 @@ AGateActor::AGateActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
 void AGateActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AGateActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AGateActor::OpenDoor()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	Execute_OnOpen(this);
 }
 
 void AGateActor::CloseDoor()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	Execute_OnClose(this);
 }
 

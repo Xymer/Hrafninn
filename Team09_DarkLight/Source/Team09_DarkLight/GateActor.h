@@ -15,7 +15,8 @@ class TEAM09_DARKLIGHT_API AGateActor : public AActor, public IGateInterface
 public:	
 	// Sets default values for this actor's properties
 	AGateActor();
-
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Door")
+		bool bIsOpen = false;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

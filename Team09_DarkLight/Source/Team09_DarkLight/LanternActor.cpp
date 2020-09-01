@@ -14,10 +14,7 @@ ALanternActor::ALanternActor()
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetGenerateOverlapEvents(true);
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);
-
 }
-
-
 
 // Called when the game starts or when spawned
 void ALanternActor::BeginPlay()
@@ -80,12 +77,10 @@ void ALanternActor::TryToSolveWithKeys(APawn* pawn)
 		if (GateToOpen)
 		{
 			GateToOpen->Execute_OnOpen(GateToOpen);
-		}
-		//TODO: Light up the Lantern
+		}		
 		//TODO: Make liftable object unliftable
 		Execute_OnSolved(this);
 	}
-
 }
 
 void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
@@ -95,7 +90,6 @@ void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 	{
 		TryToSolveWithKeys(player);
 	}
-
 }
 
 void ALanternActor::IncreaseIntensity(float Value)
