@@ -22,6 +22,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	void InputHandling();
+
 	void CheckForPhysicsHandler();
 
 
@@ -35,7 +37,10 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
-	float Reach =100.f;
+		float Reach = 100.f;
+
+	UPROPERTY(EditAnywhere, Category = "Drag Helper Value")
+		float UpdateLocationHelper = 10.f;
 
 
 	FHitResult GetObjectInReach();
