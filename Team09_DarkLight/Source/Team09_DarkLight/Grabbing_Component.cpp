@@ -105,8 +105,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 void UGrabbing_Component::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-
 	UpdateGrabbedItemLocation();
 }
 
@@ -114,15 +112,17 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 {
 	AActor* CurrentOwner = GetOwner();
 	FVector StartLineTrace;
-	FVector ExtensionFromStartLineTrace = GetOwner()->GetActorForwardVector();
+	FVector ExtensionFromStartLineTrace = CurrentOwner->GetActorForwardVector();
 	FRotator RotatelineTrace = CurrentOwner->GetActorRotation();
 
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
 
 	FVector EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
+
+
 	if (PhysicsHandle->GrabbedComponent)
-	{
-		PhysicsHandle->SetTargetLocation(EndofLineTrace + UpdateLocationHelper);
+	{	
+		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, RotatelineTrace);
 	}
 }
 
