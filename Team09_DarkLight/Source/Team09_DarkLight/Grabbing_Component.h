@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include <PhysicsEngine/PhysicsHandleComponent.h>
 #include <Components/InputComponent.h>
+#include "Team09_DarkLightCharacter.h"
 #include "Grabbing_Component.generated.h"
 
 
@@ -36,6 +37,7 @@ public:
 
 	void PushPull();
 	void StopPushPull();
+	void SetOwner(ATeam09_DarkLightCharacter* Owner);
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
@@ -43,7 +45,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
 		float UpdateLocationHelper = 10.f;
-
+	ATeam09_DarkLightCharacter* Player = nullptr;
 
 	FHitResult GetObjectInReach();
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;

@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Grabbing_Component.h"
 
 ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 {
@@ -27,6 +28,9 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 }
 
+
+	
+
 void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 {
 	if (HeldSouls.Contains(KeyToPickup))
@@ -47,6 +51,12 @@ void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATeam09_DarkLightCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ATeam09_DarkLightCharacter::MoveUp);
 
+}
+
+void ATeam09_DarkLightCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	FindComponentByClass<UGrabbing_Component>()->SetOwner(this);
 }
 
 void ATeam09_DarkLightCharacter::MoveRight(float Value)

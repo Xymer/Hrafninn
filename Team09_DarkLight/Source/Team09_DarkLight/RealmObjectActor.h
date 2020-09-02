@@ -20,6 +20,8 @@ public:
 		TEnumAsByte<RealmType> VisibleRealm = RealmType::Light;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
 		bool bIsAffectedByRealm = true;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Realm")
+		bool bIsGrabbable = false;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

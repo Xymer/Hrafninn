@@ -5,6 +5,9 @@
 #include <Components/ActorComponent.h>
 #include <Engine/Engine.h>
 #include <Math/Rotator.h>
+#include <Team09_DarkLight\RealmObjectActor.h>
+#include "GrabbableInterface.h"
+#include <Components/PrimitiveComponent.h>
 
 
 
@@ -55,11 +58,27 @@ void UGrabbing_Component::CheckForPhysicsHandler()
 void UGrabbing_Component::PushPull()
 {
 	GetObjectInReach();
+	if (Player->HeldItem)
+	{
+		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+	}
 }
 
 void UGrabbing_Component::StopPushPull()
 {
 	PhysicsHandle->ReleaseComponent();
+	if (Player->HeldItem)
+	{
+		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
+	}
+}
+
+void UGrabbing_Component::SetOwner(ATeam09_DarkLightCharacter* Owner)
+{
+	if (!Player)
+	{
+		Player = Owner;
+	}
 }
 
 FHitResult UGrabbing_Component::GetObjectInReach()
@@ -83,17 +102,24 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 		if (GetWorld()->LineTraceSingleByChannel(ItemHit, StartLineTrace, EndofLineTrace, ECC_PhysicsBody, TraceQueryParams))
 		{
-
-			AActor* Actorhit = ItemHit.GetActor();
-			UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
-			FRotator GrabbedItemRotation = GrabbedItemComponent->GetComponentRotation();
+			AActor* Actorhit = nullptr;
+			ARealmObjectActor* Object = Cast<ARealmObjectActor>(ItemHit.GetActor());
+			if (Object)
+			{
+				if (Object->bIsGrabbable)
+				{
+					Actorhit = ItemHit.GetActor();
+				}
+			}
 
 			if (Actorhit)
 			{
+				UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
+				FRotator GrabbedItemRotation = Actorhit->GetActorForwardVector().Rotation();
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, EndofLineTrace, GrabbedItemRotation);
 				/*GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);*/
+				Player->HeldItem = Actorhit;
 			}
-
 		}
 
 		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
@@ -121,7 +147,7 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 
 	if (PhysicsHandle->GrabbedComponent)
-	{	
+	{
 		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, RotatelineTrace);
 	}
 }

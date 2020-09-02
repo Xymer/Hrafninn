@@ -16,6 +16,8 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TArray<ASoulActor*> HeldSouls;
 
+	AActor* HeldItem = nullptr;
+
 protected:
 
 	/** Called for side to side input */
@@ -27,10 +29,10 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+	virtual void BeginPlay() override;
 
 public:
 	ATeam09_DarkLightCharacter();
-
 	void PickUpKey(ASoulActor* SoulToPickup);
 
 };
