@@ -102,20 +102,20 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 		if (GetWorld()->LineTraceSingleByChannel(ItemHit, StartLineTrace, EndofLineTrace, ECC_PhysicsBody, TraceQueryParams))
 		{
-			AActor* Actorhit = nullptr;
-			ARealmObjectActor* Object = Cast<ARealmObjectActor>(ItemHit.GetActor());
+			AActor* Actorhit = ItemHit.GetActor();
+			/*ARealmObjectActor* Object = Cast<ARealmObjectActor>(ItemHit.GetActor());
 			if (Object)
 			{
 				if (Object->bIsGrabbable)
 				{
 					Actorhit = ItemHit.GetActor();
 				}
-			}
+			}*/
 
 			if (Actorhit)
 			{
 				UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
-				FRotator GrabbedItemRotation = Actorhit->GetActorForwardVector().Rotation();
+				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, EndofLineTrace, GrabbedItemRotation);
 				/*GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);*/
 				Player->HeldItem = Actorhit;
@@ -148,7 +148,7 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, RotatelineTrace);
+		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
 	}
 }
 
