@@ -102,15 +102,15 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 		if (GetWorld()->LineTraceSingleByChannel(ItemHit, StartLineTrace, EndofLineTrace, ECC_PhysicsBody, TraceQueryParams))
 		{
-			AActor* Actorhit = ItemHit.GetActor();
-			/*ARealmObjectActor* Object = Cast<ARealmObjectActor>(ItemHit.GetActor());
+			AActor* Actorhit = nullptr;
+			ARealmObjectActor* Object = Cast<ARealmObjectActor>(ItemHit.GetActor());
 			if (Object)
 			{
 				if (Object->bIsGrabbable)
 				{
 					Actorhit = ItemHit.GetActor();
 				}
-			}*/
+			}
 
 			if (Actorhit)
 			{
