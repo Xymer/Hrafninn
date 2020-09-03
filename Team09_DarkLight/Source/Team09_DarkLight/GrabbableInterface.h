@@ -20,6 +20,16 @@ class TEAM09_DARKLIGHT_API IGrabbableInterface
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
+		// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Grabble Item")
+		void OnDetectedGrabble();
+	void OnDetectedGrabble_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Grabble Item")
+		void OnNotDetectedGrabble();
+	void OnNotDetectedGrabble_Implementation();
+
+	
 };

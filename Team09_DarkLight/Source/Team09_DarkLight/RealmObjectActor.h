@@ -6,10 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "RealmType.h"
 #include "RealmObject.h"
+#include "GrabbableInterface.h"
 #include "RealmObjectActor.generated.h"
 
 UCLASS(Blueprintable,BlueprintType)
-class TEAM09_DARKLIGHT_API ARealmObjectActor : public AActor, public IRealmObject
+class TEAM09_DARKLIGHT_API ARealmObjectActor : public AActor, public IRealmObject, public IGrabbableInterface
+
 {
 	GENERATED_BODY()
 	
