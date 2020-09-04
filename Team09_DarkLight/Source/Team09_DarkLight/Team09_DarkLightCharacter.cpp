@@ -29,7 +29,7 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 }
 
 
-	
+
 
 void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 {
@@ -37,7 +37,17 @@ void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 	{
 		return;
 	}
-	HeldSouls.Add(KeyToPickup);	
+	HeldSouls.Add(KeyToPickup);
+}
+
+void ATeam09_DarkLightCharacter::Jump()
+{
+	if (HeldItem)
+	{
+		return;
+	}
+	bPressedJump = true;
+	JumpKeyHoldTime = 0.0f;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -46,7 +56,7 @@ void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ATeam09_DarkLightCharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATeam09_DarkLightCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ATeam09_DarkLightCharacter::MoveUp);
@@ -61,13 +71,26 @@ void ATeam09_DarkLightCharacter::BeginPlay()
 
 void ATeam09_DarkLightCharacter::MoveRight(float Value)
 {
-	// add movement in that direction
-	AddMovementInput(FVector(0.0f,-1.0f,0.0f), Value);
+	if (HeldItem && GetActorForwardVector().Y > 0.25f || HeldItem && GetActorForwardVector().Y < -0.25f)
+	{
+		AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+	}
+	else
+	{
+		AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value);
+	}
 }
 
 void ATeam09_DarkLightCharacter::MoveUp(float Value)
 {
-	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
+	if (HeldItem && GetActorForwardVector().X > 0.25f || HeldItem && GetActorForwardVector().X < -0.25f)
+	{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+	}
+	else
+	{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
+	}
 }
 
 

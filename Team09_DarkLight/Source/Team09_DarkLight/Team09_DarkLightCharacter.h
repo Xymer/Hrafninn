@@ -17,6 +17,8 @@ public:
 	TArray<ASoulActor*> HeldSouls;
 
 	AActor* HeldItem = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float HeldItemMoveSpeedMultiplier = 0.5f;
 
 protected:
 
@@ -34,5 +36,5 @@ protected:
 public:
 	ATeam09_DarkLightCharacter();
 	void PickUpKey(ASoulActor* SoulToPickup);
-
+	void Jump() override;
 };
