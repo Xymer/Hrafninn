@@ -8,6 +8,7 @@
 #include <Team09_DarkLight\RealmObjectActor.h>
 #include "GrabbableInterface.h"
 #include <Components/PrimitiveComponent.h>
+#include <GameFramework/CharacterMovementComponent.h>
 
 
 
@@ -61,6 +62,10 @@ void UGrabbing_Component::PushPull()
 	if (Player->HeldItem)
 	{
 		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+	
+		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
+		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
+
 	}
 }
 
@@ -70,6 +75,9 @@ void UGrabbing_Component::StopPushPull()
 	if (Player->HeldItem)
 	{
 		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
+		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = true;
+		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = true;
+
 	}
 }
 
@@ -116,7 +124,8 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 			{
 				UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
 				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
-				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, EndofLineTrace, GrabbedItemRotation);
+				FVector LiftLocation = FVector(EndofLineTrace.X + 10.f, EndofLineTrace.Y, EndofLineTrace.Z * 1.0375f);
+				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, LiftLocation, GrabbedItemRotation);
 				/*GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);*/
 				Player->HeldItem = Actorhit;
 			}
