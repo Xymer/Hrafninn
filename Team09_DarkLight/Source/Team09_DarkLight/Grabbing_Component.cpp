@@ -117,8 +117,8 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 				UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
 				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, EndofLineTrace, GrabbedItemRotation);
+				/*GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);*/
 				Player->HeldItem = Actorhit;
-				Object->Execute_OnDetectedGrabble(Actorhit);
 			}
 		}
 
@@ -151,34 +151,4 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
 	}
 }
-
-//void UGrabbing_Component::LocateGrabbleItem()
-//{
-//	
-//	FHitResult ItemHit;
-//	AActor* CurrentOwner = GetOwner();
-//
-//	FVector StartLineTrace;
-//	FVector ExtensionFromStartLineTrace = GetOwner()->GetActorForwardVector();
-//	FRotator RotatelineTrace = GetOwner()->GetActorRotation();
-//
-//	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
-//
-//	FVector EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * 200.f;
-//
-//	FCollisionQueryParams TraceQueryParams;
-//	TraceQueryParams.AddIgnoredActor(CurrentOwner);
-//	TraceQueryParams.bTraceComplex = true;
-//
-//	if (GetWorld()->LineTraceSingleByChannel(ItemHit, StartLineTrace ,EndofLineTrace, ECC_PhysicsBody, TraceQueryParams))
-//	{
-//		if (ItemHit.GetActor() == nullptr)
-//		{
-//			return;
-//		}
-//		AActor* ActorHit = ItemHit.GetActor();
-//		GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Orange, FString(ActorHit->GetName()), true);
-//	}
-//	DrawDebugLine(GetWorld(), StartLineTrace, end, FColor::Green, false, 1.f);
-//}
 
