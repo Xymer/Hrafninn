@@ -37,7 +37,7 @@ public:
 	void StopPushPull();
 	void SetOwner(ATeam09_DarkLightCharacter* Owner);
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 20.00))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
 		float HeldItemAccelerationAdjust = 10.f;
 
 	FVector StartLineTrace;
