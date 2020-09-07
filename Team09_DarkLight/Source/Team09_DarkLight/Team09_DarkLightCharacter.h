@@ -17,7 +17,7 @@ public:
 	TArray<ASoulActor*> HeldSouls;
 
 	AActor* HeldItem = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta= (UIMin = 0.0001, UIMax = 1.00) )
 		float HeldItemMoveSpeedMultiplier = 0.5f;
 
 protected:
