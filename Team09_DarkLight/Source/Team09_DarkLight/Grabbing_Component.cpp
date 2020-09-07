@@ -126,7 +126,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
 				FVector LiftLocation = FVector(EndofLineTrace.X + 10.f, EndofLineTrace.Y, EndofLineTrace.Z * 1.0375f);
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, LiftLocation, GrabbedItemRotation);
-				/*GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString(Actorhit->GetName()), true);*/
 				Player->HeldItem = Actorhit;
 			}
 		}
@@ -146,9 +145,6 @@ void UGrabbing_Component::TickComponent(float DeltaTime, ELevelTick TickType, FA
 void UGrabbing_Component::UpdateGrabbedItemLocation()
 {
 	CurrentOwner = GetOwner();
-	/*StartLineTrace;
-	ExtensionFromStartLineTrace = CurrentOwner->GetActorForwardVector();
-	RotatelineTrace = CurrentOwner->GetActorRotation();*/
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
 	EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
 
