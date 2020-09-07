@@ -64,7 +64,7 @@ void UGrabbing_Component::PushPull()
 		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
-		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = 20.f;
+		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = HeldItemAccelerationAdjust;
 	}
 }
 
@@ -91,18 +91,18 @@ void UGrabbing_Component::SetOwner(ATeam09_DarkLightCharacter* Owner)
 
 FHitResult UGrabbing_Component::GetObjectInReach()
 {
-	AActor* CurrentOwner = GetOwner();
+	CurrentOwner = GetOwner();
 
 	if (CurrentOwner)
 	{
 		FHitResult ItemHit;
-		FVector StartLineTrace;
-		FVector ExtensionFromStartLineTrace = GetOwner()->GetActorForwardVector();
-		FRotator RotatelineTrace = GetOwner()->GetActorRotation();
+		StartLineTrace;
+		ExtensionFromStartLineTrace = GetOwner()->GetActorForwardVector();
+		RotatelineTrace = GetOwner()->GetActorRotation();
 
 		CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
 
-		FVector EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
+		EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
 
 		FCollisionQueryParams TraceQueryParams;
 		TraceQueryParams.AddIgnoredActor(CurrentOwner);
@@ -145,15 +145,12 @@ void UGrabbing_Component::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UGrabbing_Component::UpdateGrabbedItemLocation()
 {
-	AActor* CurrentOwner = GetOwner();
-	FVector StartLineTrace;
-	FVector ExtensionFromStartLineTrace = CurrentOwner->GetActorForwardVector();
-	FRotator RotatelineTrace = CurrentOwner->GetActorRotation();
-
+	CurrentOwner = GetOwner();
+	/*StartLineTrace;
+	ExtensionFromStartLineTrace = CurrentOwner->GetActorForwardVector();
+	RotatelineTrace = CurrentOwner->GetActorRotation();*/
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
-
-	FVector EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
-
+	EndofLineTrace = StartLineTrace + ExtensionFromStartLineTrace * Reach;
 
 	if (PhysicsHandle->GrabbedComponent)
 	{

@@ -22,9 +22,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
 	void InputHandling();
-
 	void CheckForPhysicsHandler();
 
 
@@ -38,6 +36,16 @@ public:
 	void PushPull();
 	void StopPushPull();
 	void SetOwner(ATeam09_DarkLightCharacter* Owner);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 20.00))
+		float HeldItemAccelerationAdjust = 10.f;
+
+	FVector StartLineTrace;
+	FVector EndofLineTrace;
+	AActor* CurrentOwner = nullptr;
+	FVector ExtensionFromStartLineTrace;
+	FRotator RotatelineTrace;
+
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
@@ -45,6 +53,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
 		float UpdateLocationHelper = 10.f;
+
+
+
 	ATeam09_DarkLightCharacter* Player = nullptr;
 
 	FHitResult GetObjectInReach();
