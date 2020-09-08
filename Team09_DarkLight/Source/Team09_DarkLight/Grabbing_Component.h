@@ -40,9 +40,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
 		float HeldItemAccelerationAdjust = 10.f;
 
+	AActor* CurrentOwner = nullptr;
 	FVector StartLineTrace;
 	FVector EndofLineTrace;
-	AActor* CurrentOwner = nullptr;
 	FVector ExtensionFromStartLineTrace;
 	FRotator RotatelineTrace;
 
