@@ -46,6 +46,7 @@ void ATeam09_DarkLightCharacter::Jump()
 	{
 		return;
 	}
+
 	bPressedJump = true;
 	JumpKeyHoldTime = 0.0f;
 }
