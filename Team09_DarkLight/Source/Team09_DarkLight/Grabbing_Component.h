@@ -38,7 +38,7 @@ public:
 	void SetOwner(ATeam09_DarkLightCharacter* Owner);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
-		float HeldItemAccelerationAdjust = 10.f;
+		float HeldItemAccelerationAdjust = 100.f;
 
 	AActor* CurrentOwner = nullptr;
 	FVector StartLineTrace;
