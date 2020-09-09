@@ -65,6 +65,7 @@ void UGrabbing_Component::PushPull()
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = HeldItemAccelerationAdjust;
+		Execute_OnPushing(this);
 	}
 }
 
@@ -78,6 +79,7 @@ void UGrabbing_Component::StopPushPull()
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = 1000.f;
 		Player->HeldItem = nullptr;
+		Execute_OnReleaseObject(this);
 	}
 }
 
