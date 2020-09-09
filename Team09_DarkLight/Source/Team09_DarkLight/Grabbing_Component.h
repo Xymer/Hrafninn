@@ -7,11 +7,12 @@
 #include <PhysicsEngine/PhysicsHandleComponent.h>
 #include <Components/InputComponent.h>
 #include "Team09_DarkLightCharacter.h"
+#include "GrabbableInterface.h"
 #include "Grabbing_Component.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent
+class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent, public IGrabbableInterface
 {
 	GENERATED_BODY()
 

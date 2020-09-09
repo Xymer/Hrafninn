@@ -17,11 +17,12 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 		TArray<ASoulActor*> HeldSouls;
 
-	AActor* HeldItem = nullptr;
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+		AActor* HeldItem = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 1.00))
 		float HeldItemMoveSpeedMultiplier = 0.5f;
-	UPROPERTY(BlueprintReadWrite,EditAnywhere)
-	bool bIsInAir = false;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool bIsInAir = false;
 
 protected:
 
