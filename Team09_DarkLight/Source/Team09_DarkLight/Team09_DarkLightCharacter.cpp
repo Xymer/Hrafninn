@@ -46,9 +46,14 @@ void ATeam09_DarkLightCharacter::Jump()
 	{
 		return;
 	}
+	if (bIsInAir)
+	{
+	Execute_OnPressedJump(this);	
+	}
 	bPressedJump = true;
 	JumpKeyHoldTime = 0.0f;
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input

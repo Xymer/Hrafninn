@@ -7,11 +7,12 @@
 #include <PhysicsEngine/PhysicsHandleComponent.h>
 #include <Components/InputComponent.h>
 #include "Team09_DarkLightCharacter.h"
+#include "GrabbableInterface.h"
 #include "Grabbing_Component.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent
+class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent, public IGrabbableInterface
 {
 	GENERATED_BODY()
 
@@ -38,14 +39,14 @@ public:
 	void SetOwner(ATeam09_DarkLightCharacter* Owner);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
-		float HeldItemAccelerationAdjust = 10.f;
+		float HeldItemAccelerationAdjust = 100.f;
 
 	AActor* CurrentOwner = nullptr;
 	FVector StartLineTrace;
 	FVector EndofLineTrace;
 	FVector ExtensionFromStartLineTrace;
 	FRotator RotatelineTrace;
-
+	UPrimitiveComponent* GrabbedItemComponent;
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
