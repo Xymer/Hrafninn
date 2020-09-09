@@ -16,9 +16,6 @@ public:
 	// Sets default values for this component's properties
 	UASoulFollowTargetComponent();
 
-	UPROPERTY()
-		APlayerController* PController;
-
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
 		AActor* TargetFollow;
 
@@ -43,20 +40,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
 		float distanceFromPlayerZ = 50.0f;
 
-	float tempDistanceFromPlayerZ;
+	float refDistanceFromPlayerZ;
+
+	float currentDistanceFromPlayerZ;
 
 	float distanceFromPlayerY = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
-		float orbZSwayMax = 1.0f;
+		float orbUpSwayHeight = 30.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
-		float orbZSwaySpeed = 1.0f;
-
-	UPROPERTY(EditAnywhere, Category = "Soul Follow")
-		float orbZSwayAcceleration = 1.0f;
-
-
+		float orbUpSwaySpeed = 15.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
 		float orbDrag = 2.2f;
@@ -65,11 +59,13 @@ public:
 
 		float playerDirection = 0.0f;
 
-		float timeCheck = 0;
-
 		bool isOrbActive = false;
 
 		bool bGoUp = false;
+
+		FVector tempSpawnSwayPos;
+
+		FVector wishPos;
 
 public:	
 	
@@ -77,11 +73,11 @@ public:
 	UFUNCTION()
 		void Acceleration(float lineLenght);
 
-	UFUNCTION()
-		void LineTrace();
+	//UFUNCTION()
+	//	void LineTrace();
 
-	UFUNCTION(BlueprintCallable, Category = "SoulFollowComponent")
-		void RotationCorrection(FVector vector1, FVector vector2);
+//	UFUNCTION(BlueprintCallable, Category = "SoulFollowComponent")
+//		void RotationCorrection(FVector vector1, FVector vector2);
 
 	UFUNCTION(BlueprintCallable, Category = "SoulFollowComponent")
 		void MoveOrb();
@@ -103,5 +99,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	virtual void BeginPlay() override;
 		
 };
