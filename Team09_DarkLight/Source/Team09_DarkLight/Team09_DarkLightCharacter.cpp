@@ -74,7 +74,7 @@ void ATeam09_DarkLightCharacter::MoveRight(float Value)
 {
 	if (HeldItem)
 	{
-		AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		return;
 	}
 	else
 	{
@@ -86,7 +86,7 @@ void ATeam09_DarkLightCharacter::MoveUp(float Value)
 {
 	if (HeldItem)
 	{
-		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		AddMovementInput(GetActorForwardVector(), Value * HeldItemMoveSpeedMultiplier);
 	}
 	else
 	{
