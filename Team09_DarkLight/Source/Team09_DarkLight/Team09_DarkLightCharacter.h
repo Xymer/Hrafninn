@@ -5,20 +5,23 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "SoulActor.h"
+#include "JumpInterface.h"
 #include "Team09_DarkLightCharacter.generated.h"
 
 UCLASS(config = Game)
-class ATeam09_DarkLightCharacter : public ACharacter
+class ATeam09_DarkLightCharacter : public ACharacter, public IJumpInterface
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(BlueprintReadOnly)
-	TArray<ASoulActor*> HeldSouls;
+		TArray<ASoulActor*> HeldSouls;
 
 	AActor* HeldItem = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta= (UIMin = 0.0001, UIMax = 1.00) )
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 1.00))
 		float HeldItemMoveSpeedMultiplier = 0.5f;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+	bool bIsInAir = false;
 
 protected:
 
@@ -37,4 +40,5 @@ public:
 	ATeam09_DarkLightCharacter();
 	void PickUpKey(ASoulActor* SoulToPickup);
 	void Jump() override;
+
 };
