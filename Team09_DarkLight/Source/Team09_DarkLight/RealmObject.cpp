@@ -30,14 +30,30 @@ void IRealmObject::SwapVisibility(RealmType CurrentRealm)
 		}
 		
 		UStaticMeshComponent* mesh = RealmActor->FindComponentByClass<UStaticMeshComponent>();
+		USkeletalMeshComponent* skelMesh = RealmActor->FindComponentByClass<USkeletalMeshComponent>();
+		if (skelMesh)
+		{
+			skelMesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
+		}
+		if (mesh)
+		{
+			mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
 
-		mesh->SetVisibility(RealmActor->VisibleRealm == CurrentRealm);
+		}
 		if (RealmActor->VisibleRealm == CurrentRealm)
 		{
+			if (skelMesh)
+			{
+				skelMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+			}
 			mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		}
 		else
 		{
+			if (skelMesh)
+			{
+				skelMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			}
 			mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
