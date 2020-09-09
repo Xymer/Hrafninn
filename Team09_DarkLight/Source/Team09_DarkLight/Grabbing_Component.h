@@ -46,7 +46,7 @@ public:
 	FVector EndofLineTrace;
 	FVector ExtensionFromStartLineTrace;
 	FRotator RotatelineTrace;
-
+	UPrimitiveComponent* GrabbedItemComponent;
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")

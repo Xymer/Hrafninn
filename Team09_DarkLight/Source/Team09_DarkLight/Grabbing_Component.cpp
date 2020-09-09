@@ -61,7 +61,7 @@ void UGrabbing_Component::PushPull()
 	GetObjectInReach();
 	if (Player->HeldItem)
 	{
-		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = HeldItemAccelerationAdjust;
@@ -74,11 +74,12 @@ void UGrabbing_Component::StopPushPull()
 	PhysicsHandle->ReleaseComponent();
 	if (Player->HeldItem)
 	{
-		Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
+		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = 1000.f;
 		Player->HeldItem = nullptr;
+		GrabbedItemComponent = nullptr;
 		Execute_OnReleaseObject(this);
 	}
 }
@@ -124,7 +125,8 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 			if (Actorhit)
 			{
-				UPrimitiveComponent* GrabbedItemComponent = ItemHit.GetComponent();
+
+				GrabbedItemComponent = ItemHit.GetComponent();
 				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
 				FVector LiftLocation = FVector(EndofLineTrace.X + 10.f, EndofLineTrace.Y, EndofLineTrace.Z * 1.0375f);
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, LiftLocation, GrabbedItemRotation);
@@ -161,6 +163,7 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 	{
 		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
+		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
 		
 	}
 }
