@@ -48,7 +48,7 @@ void ATeam09_DarkLightCharacter::Jump()
 	}
 	if (bIsInAir)
 	{
-	Execute_OnPressedJump(this);	
+		Execute_OnPressedJump(this);
 	}
 	bPressedJump = true;
 	JumpKeyHoldTime = 0.0f;
@@ -78,7 +78,12 @@ void ATeam09_DarkLightCharacter::MoveRight(float Value)
 {
 	if (HeldItem)
 	{
-		return;
+		UStaticMeshComponent* tempMesh = HeldItem->FindComponentByClass<UStaticMeshComponent>();
+
+		if (FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector())) == 0)
+		{
+			AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		}
 	}
 	else
 	{
@@ -90,7 +95,13 @@ void ATeam09_DarkLightCharacter::MoveUp(float Value)
 {
 	if (HeldItem)
 	{
-		AddMovementInput(GetActorForwardVector(), Value * HeldItemMoveSpeedMultiplier);
+
+		UStaticMeshComponent* tempMesh = HeldItem->FindComponentByClass<UStaticMeshComponent>();
+		int Product = FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector()));
+		if (Product == 1 || Product == -1)
+		{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		}
 	}
 	else
 	{
