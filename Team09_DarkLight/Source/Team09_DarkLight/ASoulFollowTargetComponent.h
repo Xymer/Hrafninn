@@ -16,7 +16,6 @@ public:
 	// Sets default values for this component's properties
 	UASoulFollowTargetComponent();
 
-	UPROPERTY(EditAnywhere, Category = "Soul Follow")
 		AActor* TargetFollow;
 
 	UPROPERTY()
@@ -47,13 +46,13 @@ public:
 	float distanceFromPlayerY = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
-		float orbUpSwayHeight = 30.0f;
+		float orbUpSwayHeight = 20.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
 		float orbUpSwaySpeed = 15.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Soul Follow")
-		float orbDrag = 2.2f;
+		float orbDrag = 1.0f;
 
 		float orbAcceleration = 1.0f;
 
@@ -68,10 +67,6 @@ public:
 		FVector wishPos;
 
 public:	
-	
-
-	UFUNCTION()
-		void Acceleration(float lineLenght);
 
 	//UFUNCTION()
 	//	void LineTrace();
