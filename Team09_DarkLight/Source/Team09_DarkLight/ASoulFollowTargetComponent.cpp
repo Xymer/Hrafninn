@@ -23,13 +23,6 @@ void UASoulFollowTargetComponent::BeginPlay()
 	refDistanceFromPlayerZ = distanceFromPlayerZ;
 	currentDistanceFromPlayerZ = 0.0f;
 	tempSpawnSwayPos = this->GetOwner()->GetActorLocation();
-	//tempSpawnSwayPos.Z -= distanceFromPlayerZ;
-}
-
-
-void UASoulFollowTargetComponent::Acceleration(float lineLenght)
-{
-	orbAcceleration = lineLenght;
 }
 
 /*
@@ -90,20 +83,24 @@ void UASoulFollowTargetComponent::OrbVerticalSway()
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, FString::SanitizeFloat(this->GetOwner()->GetActorLocation().Z));
 		FVector currentPos = this->GetOwner()->GetActorLocation();
-		FVector targetVector = this->GetOwner()->GetActorLocation() += this->GetOwner()->GetActorUpVector() * currentDistanceFromPlayerZ;
-		//FVector wishPos = FMath::VInterpTo(currentPos, targetVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed);
+		FVector targetVector = this->GetOwner()->GetActorLocation();
+		targetVector.Z *= currentDistanceFromPlayerZ;
 		if (bGoUp)
 		{
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("up"));
 			currentDistanceFromPlayerZ = FMath::FInterpTo(currentDistanceFromPlayerZ, tempSpawnSwayPos.Z + orbUpSwayHeight, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
 			wishPos = FMath::VInterpConstantTo(currentPos, targetVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
-			if (currentDistanceFromPlayerZ >= tempSpawnSwayPos.Z + orbUpSwayHeight)
+			//wishPos = FMath::VInterpTo(currentPos, targetVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
+			if (wishPos.Z >= tempSpawnSwayPos.Z + orbUpSwayHeight)
 				bGoUp = false;
 		}
 		else if (!bGoUp)
 		{
-			currentDistanceFromPlayerZ = FMath::FInterpTo(currentDistanceFromPlayerZ, tempSpawnSwayPos.Z, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
-			wishPos = FMath::VInterpConstantTo(currentPos, targetVector.UpVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 4);
-			if (currentDistanceFromPlayerZ <= tempSpawnSwayPos.Z)
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("down"));
+			currentDistanceFromPlayerZ = FMath::FInterpTo(currentDistanceFromPlayerZ, -tempSpawnSwayPos.Z, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
+			wishPos = FMath::VInterpConstantTo(currentPos, targetVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
+			//wishPos = FMath::VInterpTo(currentPos, targetVector, GetWorld()->DeltaTimeSeconds, orbUpSwaySpeed / 2);
+			if (wishPos.Z <= tempSpawnSwayPos.Z)
 				bGoUp = true;
 		}
 		this->GetOwner()->SetActorLocation(wishPos);
@@ -117,7 +114,6 @@ void UASoulFollowTargetComponent::OrbVerticalSway()
 				// currentDistanceFromPlayerZ = FMath::Lerp(currentDistanceFromPlayerZ, distanceFromPlayerZ + orbUpSwayHeight, orbUpSwaySpeed);
 
 				if (currentDistanceFromPlayerZ >= distanceFromPlayerZ + orbUpSwayHeight) {
-					//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("SWITCH"));
 					bGoUp = false;
 				}
 
@@ -130,7 +126,6 @@ void UASoulFollowTargetComponent::OrbVerticalSway()
 				//currentDistanceFromPlayerZ = FMath::Lerp(currentDistanceFromPlayerZ, distanceFromPlayerZ - orbUpSwayHeight, orbUpSwaySpeed);
 
 				if (currentDistanceFromPlayerZ <= distanceFromPlayerZ - orbUpSwayHeight) {
-					//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("SWITCH"));
 					bGoUp = true;
 				}
 
@@ -150,10 +145,13 @@ void UASoulFollowTargetComponent::RandomzieTheValues()
 
 void UASoulFollowTargetComponent::SetUp(AActor* followActor)
 {
+	PrimaryComponentTick.TickInterval = PrimaryComponentTick.TickInterval / 2;
+
 	if (!TargetFollow) {
 		TargetFollow = followActor;	//if there isnt a actor assigned in the component, use the one assigned in bp
 		if (TargetFollow) {
 			tempLoc = this->GetOwner()->GetActorLocation();
+			currentDistanceFromPlayerZ = 0;
 			RandomzieTheValues();
 			isOrbActive = true;
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("IsOrbActive IS TRUE NOW"));
