@@ -82,7 +82,7 @@ void ATeam09_DarkLightCharacter::MoveRight(float Value)
 
 		if (FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector())) == 0)
 		{
-			AddMovementInput(GetActorForwardVector(), Value * HeldItemMoveSpeedMultiplier);
+			AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
 		}
 	}
 	else
@@ -97,8 +97,11 @@ void ATeam09_DarkLightCharacter::MoveUp(float Value)
 	{
 
 		UStaticMeshComponent* tempMesh = HeldItem->FindComponentByClass<UStaticMeshComponent>();
-		if (FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector())) == 1)
-		AddMovementInput(GetActorForwardVector(), Value * HeldItemMoveSpeedMultiplier);
+		int Product = FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector()));
+		if (Product == 1 || Product == -1)
+		{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		}
 	}
 	else
 	{
