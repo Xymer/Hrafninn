@@ -125,10 +125,10 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 			if (Actorhit)
 			{
-
 				GrabbedItemComponent = ItemHit.GetComponent();
 				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
-				FVector LiftLocation = FVector(EndofLineTrace.X + 10.f, EndofLineTrace.Y, EndofLineTrace.Z * 1.0375f);
+				FVector LiftLocation = ItemHit.ImpactPoint;
+				//FVector(EndofLineTrace.X + 10.f, EndofLineTrace.Y, EndofLineTrace.Z)
 				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, LiftLocation, GrabbedItemRotation);
 				Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
 				Player->HeldItem = Actorhit;
@@ -161,10 +161,13 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
+		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace  /*+ UpdateLocationHelper*/, CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
 		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
-		
+		/*if (FVector::Distance(EndofLineTrace-GrabbedItemComponent->Bounds.BoxExtent,CurrentOwner->GetActorLocation()) > Reach)
+		{
+			StopPushPull();
+		}*/
 	}
 }
 
