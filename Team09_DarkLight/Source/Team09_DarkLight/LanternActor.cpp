@@ -74,9 +74,13 @@ void ALanternActor::TryToSolveWithKeys(APawn* pawn)
 	}
 	if (TotalSoulsTurnedIn == TotalSoulsNeeded)
 	{
-		if (GateToOpen)
+		if (GatesToOpen.Num()> 0)
 		{
-			GateToOpen->Execute_OnOpen(GateToOpen);
+			for (AGateActor*  item: GatesToOpen )
+			{
+				item->Execute_OnOpen(item);
+			}
+
 		}		
 		//TODO: Make liftable object unliftable
 		Execute_OnSolved(this);
