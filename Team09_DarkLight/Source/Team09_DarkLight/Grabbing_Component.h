@@ -47,6 +47,7 @@ public:
 	FVector ExtensionFromStartLineTrace;
 	FRotator RotatelineTrace;
 	UPrimitiveComponent* GrabbedItemComponent;
+	float distance = 0;
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
@@ -56,7 +57,7 @@ private:
 		float UpdateLocationHelper = 10.f;
 
 
-
+	const float distanceOffset = 5;
 	ATeam09_DarkLightCharacter* Player = nullptr;
 
 	FHitResult GetObjectInReach();
