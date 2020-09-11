@@ -161,7 +161,7 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
+		PhysicsHandle->SetTargetLocationAndRotation(EndofLineTrace + Player->GetActorForwardVector() * UpdateLocationHelper, CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
 		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
 		
