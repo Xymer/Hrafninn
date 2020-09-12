@@ -6,11 +6,13 @@
 #include "Components/ActorComponent.h"
 #include <PhysicsEngine/PhysicsHandleComponent.h>
 #include <Components/InputComponent.h>
+#include "Team09_DarkLightCharacter.h"
+#include "GrabbableInterface.h"
 #include "Grabbing_Component.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent
+class TEAM09_DARKLIGHT_API UGrabbing_Component : public UActorComponent, public IGrabbableInterface
 {
 	GENERATED_BODY()
 
@@ -21,9 +23,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
 	void InputHandling();
-
 	void CheckForPhysicsHandler();
 
 
@@ -36,6 +36,18 @@ public:
 
 	void PushPull();
 	void StopPushPull();
+	void SetOwner(ATeam09_DarkLightCharacter* Owner);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
+		float HeldItemAccelerationAdjust = 100.f;
+
+	AActor* CurrentOwner = nullptr;
+	FVector StartLineTrace;
+	FVector EndofLineTrace;
+	FVector ExtensionFromStartLineTrace;
+	FRotator RotatelineTrace;
+	UPrimitiveComponent* GrabbedItemComponent;
+	float distance = 0;
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
@@ -44,6 +56,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
 		float UpdateLocationHelper = 10.f;
 
+
+	const float distanceOffset = 5;
+	ATeam09_DarkLightCharacter* Player = nullptr;
 
 	FHitResult GetObjectInReach();
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;

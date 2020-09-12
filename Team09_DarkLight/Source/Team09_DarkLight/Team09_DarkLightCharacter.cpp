@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Grabbing_Component.h"
 
 ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 {
@@ -27,14 +28,32 @@ ATeam09_DarkLightCharacter::ATeam09_DarkLightCharacter()
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 }
 
+
+
+
 void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 {
 	if (HeldSouls.Contains(KeyToPickup))
 	{
 		return;
 	}
-	HeldSouls.Add(KeyToPickup);	
+	HeldSouls.Add(KeyToPickup);
 }
+
+void ATeam09_DarkLightCharacter::Jump()
+{
+	if (HeldItem)
+	{
+		return;
+	}
+	if (bIsInAir)
+	{
+		Execute_OnPressedJump(this);
+	}
+	bPressedJump = true;
+	JumpKeyHoldTime = 0.0f;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -42,22 +61,52 @@ void ATeam09_DarkLightCharacter::PickUpKey(ASoulActor* KeyToPickup)
 void ATeam09_DarkLightCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ATeam09_DarkLightCharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATeam09_DarkLightCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ATeam09_DarkLightCharacter::MoveUp);
 
 }
 
+void ATeam09_DarkLightCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	FindComponentByClass<UGrabbing_Component>()->SetOwner(this);
+}
+
 void ATeam09_DarkLightCharacter::MoveRight(float Value)
 {
-	// add movement in that direction
-	AddMovementInput(FVector(0.0f,-1.0f,0.0f), Value);
+	if (HeldItem)
+	{
+		UStaticMeshComponent* tempMesh = HeldItem->FindComponentByClass<UStaticMeshComponent>();
+
+		if (FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector())) == 0)
+		{
+			AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		}
+	}
+	else
+	{
+		AddMovementInput(FVector(0.0f, -1.0f, 0.0f), Value);
+	}
 }
 
 void ATeam09_DarkLightCharacter::MoveUp(float Value)
 {
-	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
+	if (HeldItem)
+	{
+
+		UStaticMeshComponent* tempMesh = HeldItem->FindComponentByClass<UStaticMeshComponent>();
+		int Product = FMath::RoundToInt(FVector::DotProduct(tempMesh->GetRelativeLocation().ForwardVector, GetActorForwardVector()));
+		if (Product == 1 || Product == -1)
+		{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value * HeldItemMoveSpeedMultiplier);
+		}
+	}
+	else
+	{
+		AddMovementInput(FVector(-1.0f, 0.0f, 0.0f), Value);
+	}
 }
 
 

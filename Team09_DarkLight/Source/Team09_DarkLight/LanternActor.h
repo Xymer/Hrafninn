@@ -36,7 +36,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Puzzle")
 		int TotalSoulsTurnedIn = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
-		AGateActor* GateToOpen = nullptr;
+		TArray<AGateActor*> GatesToOpen;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 		TArray<AActor*> LiftableObjects;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
