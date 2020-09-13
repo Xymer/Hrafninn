@@ -9,6 +9,7 @@
 #include "GrabbableInterface.h"
 #include <Components/PrimitiveComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
+#include <Math/UnrealMathUtility.h>
 
 
 
@@ -123,17 +124,29 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 				}
 			}
 
-			if (Actorhit)
-			{
+			float DistanceToGrab = FMath::PointDistToLine(ItemHit.Location, CurrentOwner->GetActorLocation(), CurrentOwner->GetActorForwardVector());
 
-				GrabbedItemComponent = ItemHit.GetComponent();
-				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
-				FVector LiftLocation = FVector(EndofLineTrace.X + Player->GetActorForwardVector().X * 10.f, EndofLineTrace.Y + Player->GetActorForwardVector().Y * 10.f, EndofLineTrace.Z * 1.0375f);
-				distance = FVector::Distance(Player->GetActorLocation(), ItemHit.ImpactPoint);
-				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, ItemHit.ImpactPoint + Player->GetActorForwardVector(), GrabbedItemRotation);
-				Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
-				Player->HeldItem = Actorhit;
+			if (DistanceToGrab >= DistToGrabEnabled)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Grabble"));
+				if (Actorhit)
+				{
+
+					GrabbedItemComponent = ItemHit.GetComponent();
+					FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
+					FVector LiftLocation = FVector(EndofLineTrace.X + Player->GetActorForwardVector().X * 10.f, EndofLineTrace.Y + Player->GetActorForwardVector().Y * 10.f, EndofLineTrace.Z * 1.0375f);
+					distance = FVector::Distance(Player->GetActorLocation(), ItemHit.ImpactPoint);
+					PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, ItemHit.ImpactPoint + Player->GetActorForwardVector(), GrabbedItemRotation);
+					Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
+					Player->HeldItem = Actorhit;
+				}
 			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Not Grabble"));
+			}
+
+
 		}
 
 		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
@@ -162,7 +175,7 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocationAndRotation(Player->GetActorLocation() + Player->GetActorForwardVector() * (distance +distanceOffset), CurrentOwner->GetActorForwardVector().Rotation());
+		PhysicsHandle->SetTargetLocationAndRotation(Player->GetActorLocation() + Player->GetActorForwardVector() * (distance + distanceOffset), CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
 		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
 
