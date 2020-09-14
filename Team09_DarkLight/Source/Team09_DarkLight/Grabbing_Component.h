@@ -56,9 +56,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
 		float UpdateLocationHelper = 10.f;
 
-	UPROPERTY(EditAnywhere, Category = "Drag Halper Value")
-	float DistToGrabEnabled = 25.0f; 
-
 	const float distanceOffset = 5;
 	ATeam09_DarkLightCharacter* Player = nullptr;
 

@@ -124,10 +124,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 				}
 			}
 
-			float DistanceToGrab = FMath::PointDistToLine(ItemHit.Location, CurrentOwner->GetActorLocation(), CurrentOwner->GetActorForwardVector());
-
-
-				UE_LOG(LogTemp, Warning, TEXT("Grabble"));
 				if (Actorhit)
 				{
 
@@ -138,9 +134,7 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 					PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, ItemHit.ImpactPoint + Player->GetActorForwardVector(), GrabbedItemRotation);
 					Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
 					Player->HeldItem = Actorhit;
-				}
-
-				UE_LOG(LogTemp, Warning, TEXT("Not Grabble"));		
+				}		
 		}
 
 		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
