@@ -13,7 +13,7 @@ enum class EMapList : uint8
 	Level2  UMETA(DisplayName = "L_GroundFloor_Lvl2"),
 	Level3  UMETA(DisplayName = "L_Attic_Level3"),
 	Level4  UMETA(DisplayName = "L_Credits"),
-	Level5  UMETA(DisplayName = "L_StartScreen"),
+	Level5  UMETA(DisplayName = "L_StartLevel"),
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
