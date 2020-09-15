@@ -38,7 +38,7 @@ void UALevelList::LoadLevel()
 		MapString = FString(TEXT("L_Credits"));
 		break;
 	case EMapList::Level5:
-		MapString = FString(TEXT("L_StartScreen"));
+		MapString = FString(TEXT("L_StartLevel"));
 		break;
 	}
 
