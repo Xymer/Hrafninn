@@ -126,7 +126,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 
 				if (Actorhit)
 				{
-
 					GrabbedItemComponent = ItemHit.GetComponent();
 					FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
 					FVector LiftLocation = FVector(EndofLineTrace.X + Player->GetActorForwardVector().X * 10.f, EndofLineTrace.Y + Player->GetActorForwardVector().Y * 10.f, EndofLineTrace.Z * 1.0375f);
@@ -164,7 +163,6 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 		PhysicsHandle->SetTargetLocationAndRotation(Player->GetActorLocation() + Player->GetActorForwardVector() * (distance + distanceOffset), CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
 		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
-
 	}
 }
 

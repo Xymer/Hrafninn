@@ -10,10 +10,10 @@ void ILanternInterface::SetKeysToSolve()
 
 }
 
-void ILanternInterface::TryToSolveWithKeys(APawn* pawn)
-{
-
-}
+//void ILanternInterface::TryToSolveWithKeys(APawn* pawn)
+//{
+//
+//}
 
 void ILanternInterface::OnSolved_Implementation()
 {

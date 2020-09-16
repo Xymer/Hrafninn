@@ -25,7 +25,7 @@ class TEAM09_DARKLIGHT_API ILanternInterface
 public:
 
 	virtual void SetKeysToSolve();
-	virtual void TryToSolveWithKeys(APawn* pawn);
+	//virtual void TryToSolveWithKeys(APawn* pawn);
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnSolved();
 	void OnSolved_Implementation();

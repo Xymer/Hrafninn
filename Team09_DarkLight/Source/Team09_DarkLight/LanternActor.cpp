@@ -13,7 +13,7 @@ ALanternActor::ALanternActor()
 	PrimaryActorTick.bCanEverTick = true;
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetGenerateOverlapEvents(true);
-	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);
+	/*TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);*/
 }
 
 // Called when the game starts or when spawned
@@ -40,8 +40,7 @@ void ALanternActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (CurrentIntensity >= PointLightComponent->Intensity)
 	{
-		PointLightComponent->SetIntensity(FMath::FInterpTo(PointLightComponent->Intensity,CurrentIntensity,DeltaTime,IntensityLerpSpeed));		
-		GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Blue, FString::SanitizeFloat(PointLightComponent->Intensity), true);
+		PointLightComponent->SetIntensity(FMath::FInterpTo(PointLightComponent->Intensity, CurrentIntensity, DeltaTime, IntensityLerpSpeed));
 	}
 }
 
@@ -50,57 +49,60 @@ void ALanternActor::SetKeysToSolve()
 
 }
 
-void ALanternActor::TryToSolveWithKeys(APawn* pawn)
+void ALanternActor::TryToSolveWithKeys(APawn* pawn, RealmType CurrentRealm)
 {
 	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(pawn);
 	TArray<ASoulActor*> ToRemoveActors;
-	if (player->HeldSouls.Num() > 0)
+	if (CurrentRealm == VisibleRealm)
 	{
-		for (ASoulActor* Soul : player->HeldSouls)
+		if (player->HeldSouls.Num() > 0)
 		{
-			if (Soul->TypeOfSoul == TypeOfSoul)
+			for (ASoulActor* Soul : player->HeldSouls)
 			{
-				Soul->Execute_OnTurnIn(Soul, Cast<AActor>(this));
-				TotalSoulsTurnedIn++;
-				IncreaseIntensity(IncreaseIntensityBy);
-				ToRemoveActors.Add(Soul);
+				if (Soul->TypeOfSoul == TypeOfSoul)
+				{
+					Soul->Execute_OnTurnIn(Soul, Cast<AActor>(this));
+					TotalSoulsTurnedIn++;
+					IncreaseIntensity(IncreaseIntensityBy);
+					ToRemoveActors.Add(Soul);
+				}
 			}
-		}
-		for (ASoulActor* Soul : ToRemoveActors)
-		{
-			player->HeldSouls.Remove(Soul);
-		}
-		ToRemoveActors.Empty();
-	}
-	if (TotalSoulsTurnedIn == TotalSoulsNeeded)
-	{
-		if (GatesToOpen.Num()> 0)
-		{
-			for (AGateActor*  item: GatesToOpen )
+			for (ASoulActor* Soul : ToRemoveActors)
 			{
-				item->Execute_OnOpen(item);
+				player->HeldSouls.Remove(Soul);
 			}
+			ToRemoveActors.Empty();
+		}
+		if (TotalSoulsTurnedIn == TotalSoulsNeeded)
+		{
+			if (GatesToOpen.Num() > 0)
+			{
+				for (AGateActor* item : GatesToOpen)
+				{
+					item->Execute_OnOpen(item);
+				}
 
-		}		
-		//TODO: Make liftable object unliftable
-		Execute_OnSolved(this);
+			}
+			//TODO: Make liftable object unliftable
+			Execute_OnSolved(this);
+		}
 	}
 }
 
-void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
-{
-	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(OtherActor);
-	if (player != NULL)
-	{
-		TryToSolveWithKeys(player);
-	}
-}
+//void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
+//{
+//	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(OtherActor);
+//	if (player != NULL)
+//	{
+//		TryToSolveWithKeys(player,VisibleRealm);
+//	}
+//}
 
 void ALanternActor::IncreaseIntensity(float Value)
 {
 	if (TotalSoulsNeeded >= TotalSoulsTurnedIn)
 	{
-		CurrentIntensity += Value;		
+		CurrentIntensity += Value;
 	}
 }
 
