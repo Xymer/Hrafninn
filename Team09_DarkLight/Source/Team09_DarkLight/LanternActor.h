@@ -63,10 +63,7 @@ public:
 		void SetKeysToSolve() override;
 
 	UFUNCTION(BlueprintCallable)
-		void TryToSolveWithKeys(APawn* pawn) override;
-
-	UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);
+		void TryToSolveWithKeys(APawn* pawn,RealmType CurrentRealm);
 
 	void IncreaseIntensity(float Value);
 };
