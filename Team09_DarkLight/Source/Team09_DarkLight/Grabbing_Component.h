@@ -40,7 +40,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
 		float HeldItemAccelerationAdjust = 100.f;
-
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item")
+		float DistanceToReleaseObject = 50.0f;
 	AActor* CurrentOwner = nullptr;
 	FVector StartLineTrace;
 	FVector EndofLineTrace;

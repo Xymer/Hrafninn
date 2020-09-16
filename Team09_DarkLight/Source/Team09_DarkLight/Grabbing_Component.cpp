@@ -150,7 +150,10 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 	{
 		return;
 	}
-
+	if (FVector::Distance(Player->GetActorLocation(),Player->HeldItem->GetActorLocation()) > DistanceToReleaseObject)
+	{
+		StopPushPull();
+	}
 
 	CurrentOwner = GetOwner();
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
