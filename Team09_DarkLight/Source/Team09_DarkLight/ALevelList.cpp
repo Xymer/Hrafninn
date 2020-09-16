@@ -26,13 +26,13 @@ void UALevelList::LoadLevel()
 	switch (EMapList)
 	{
 	case EMapList::Level1:
-		MapString = FString(TEXT("L_Tutorial_Lvl1c"));
+		MapString = FString(TEXT("L_Tutorial_Lvl1"));
 		break;
 	case EMapList::Level2:
-		MapString = FString(TEXT("L_GroundFloor_Lvl2c"));
+		MapString = FString(TEXT("L_GroundFloor_Lvl2"));
 		break;
 	case EMapList::Level3:
-		MapString = FString(TEXT("L_Attic_Level3c"));
+		MapString = FString(TEXT("L_Attic_Level3"));
 		break;
 	case EMapList::Level4:
 		MapString = FString(TEXT("L_Credits"));
@@ -60,15 +60,15 @@ void UALevelList::LevelNullCheck(FString  MapString)
 {
 	FName MapName = FName(MapString);
 	FString currentLevel = GetWorld()->GetName();
-	if (currentLevel == "L_Tutorial_Lvl1c")
+	if (currentLevel == "L_Tutorial_Lvl1")
 	{
-		MapName = FName(TEXT("L_GroundFloor_Lvl2c"));
+		MapName = FName(TEXT("L_GroundFloor_Lvl2"));
 	}
-	else if (currentLevel == "L_GroundFloor_Lvl2c")
+	else if (currentLevel == "L_GroundFloor_Lvl2")
 	{
-		MapName = FName(TEXT("L_Attic_Level3c"));
+		MapName = FName(TEXT("L_Attic_Level3"));
 	}
-	else if (currentLevel == "L_Attic_Level3c")
+	else if (currentLevel == "L_Attic_Level3")
 	{
 		MapName = FName(TEXT("L_Credits"));
 	}
