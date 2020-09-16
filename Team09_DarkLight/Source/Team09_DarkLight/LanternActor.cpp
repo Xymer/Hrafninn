@@ -13,7 +13,6 @@ ALanternActor::ALanternActor()
 	PrimaryActorTick.bCanEverTick = true;
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetGenerateOverlapEvents(true);
-	/*TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ALanternActor::OnOverlapBegin);*/
 }
 
 // Called when the game starts or when spawned
@@ -83,20 +82,11 @@ void ALanternActor::TryToSolveWithKeys(APawn* pawn, RealmType CurrentRealm)
 				}
 
 			}
-			//TODO: Make liftable object unliftable
 			Execute_OnSolved(this);
 		}
 	}
 }
 
-//void ALanternActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
-//{
-//	ATeam09_DarkLightCharacter* player = Cast<ATeam09_DarkLightCharacter>(OtherActor);
-//	if (player != NULL)
-//	{
-//		TryToSolveWithKeys(player,VisibleRealm);
-//	}
-//}
 
 void ALanternActor::IncreaseIntensity(float Value)
 {

@@ -62,7 +62,6 @@ void UGrabbing_Component::PushPull()
 	GetObjectInReach();
 	if (Player->HeldItem)
 	{
-		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = HeldItemAccelerationAdjust;
@@ -75,7 +74,6 @@ void UGrabbing_Component::StopPushPull()
 	PhysicsHandle->ReleaseComponent();
 	if (Player->HeldItem)
 	{
-		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = 1000.f;
