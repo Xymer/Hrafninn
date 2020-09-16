@@ -136,8 +136,6 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 					Player->HeldItem = Actorhit;
 				}		
 		}
-
-		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
 	}
 	return FHitResult();
 }
