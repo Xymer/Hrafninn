@@ -9,9 +9,9 @@
 UENUM(BlueprintType)
 enum class EMapList : uint8
 {
-	Level1  UMETA(DisplayName = "L_Tutorial_Lvl1c"),
-	Level2  UMETA(DisplayName = "L_GroundFloor_Lvl2c"),
-	Level3  UMETA(DisplayName = "L_Attic_Level3c"),
+	Level1  UMETA(DisplayName = "L_Tutorial_Lvl1"),
+	Level2  UMETA(DisplayName = "L_GroundFloor_Lvl2"),
+	Level3  UMETA(DisplayName = "L_Attic_Level3"),
 	Level4  UMETA(DisplayName = "L_Credits"),
 	Level5  UMETA(DisplayName = "L_StartLevel"),
 };
