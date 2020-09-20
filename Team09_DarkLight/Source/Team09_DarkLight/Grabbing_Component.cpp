@@ -9,6 +9,7 @@
 #include "GrabbableInterface.h"
 #include <Components/PrimitiveComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
+#include <Math/UnrealMathUtility.h>
 
 
 
@@ -61,7 +62,6 @@ void UGrabbing_Component::PushPull()
 	GetObjectInReach();
 	if (Player->HeldItem)
 	{
-		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = false;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = HeldItemAccelerationAdjust;
@@ -74,7 +74,6 @@ void UGrabbing_Component::StopPushPull()
 	PhysicsHandle->ReleaseComponent();
 	if (Player->HeldItem)
 	{
-		//Player->HeldItem->FindComponentByClass<UPrimitiveComponent>()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bOrientRotationToMovement = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->bUseControllerDesiredRotation = true;
 		Player->FindComponentByClass<UCharacterMovementComponent>()->MaxAcceleration = 1000.f;
@@ -123,20 +122,17 @@ FHitResult UGrabbing_Component::GetObjectInReach()
 				}
 			}
 
-			if (Actorhit)
-			{
-
-				GrabbedItemComponent = ItemHit.GetComponent();
-				FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
-				FVector LiftLocation = FVector(EndofLineTrace.X + Player->GetActorForwardVector().X * 10.f, EndofLineTrace.Y + Player->GetActorForwardVector().Y * 10.f, EndofLineTrace.Z * 1.0375f);
-				distance = FVector::Distance(Player->GetActorLocation(), ItemHit.ImpactPoint);
-				PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, ItemHit.ImpactPoint + Player->GetActorForwardVector(), GrabbedItemRotation);
-				Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
-				Player->HeldItem = Actorhit;
-			}
+				if (Actorhit)
+				{
+					GrabbedItemComponent = ItemHit.GetComponent();
+					FRotator GrabbedItemRotation = CurrentOwner->GetActorForwardVector().Rotation();
+					FVector LiftLocation = FVector(EndofLineTrace.X + Player->GetActorForwardVector().X * 10.f, EndofLineTrace.Y + Player->GetActorForwardVector().Y * 10.f, EndofLineTrace.Z * 1.0375f);
+					distance = FVector::Distance(Player->GetActorLocation(), ItemHit.ImpactPoint);
+					PhysicsHandle->GrabComponentAtLocationWithRotation(GrabbedItemComponent, NAME_None, ItemHit.ImpactPoint + Player->GetActorForwardVector(), GrabbedItemRotation);
+					Object->SetActorLocationAndRotation(PhysicsHandle->GrabbedComponent->GetComponentLocation(), GrabbedItemRotation);
+					Player->HeldItem = Actorhit;
+				}		
 		}
-
-		DrawDebugLine(GetWorld(), StartLineTrace, EndofLineTrace, FColor::Red, false, 05.f);
 	}
 	return FHitResult();
 }
@@ -154,7 +150,10 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 	{
 		return;
 	}
-
+	if (FVector::Distance(Player->GetActorLocation(),Player->HeldItem->GetActorLocation()) > DistanceToReleaseObject)
+	{
+		StopPushPull();
+	}
 
 	CurrentOwner = GetOwner();
 	CurrentOwner->GetActorEyesViewPoint(StartLineTrace, RotatelineTrace);
@@ -162,10 +161,9 @@ void UGrabbing_Component::UpdateGrabbedItemLocation()
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
-		PhysicsHandle->SetTargetLocationAndRotation(Player->GetActorLocation() + Player->GetActorForwardVector() * (distance +distanceOffset), CurrentOwner->GetActorForwardVector().Rotation());
+		PhysicsHandle->SetTargetLocationAndRotation(Player->GetActorLocation() + Player->GetActorForwardVector() * (distance + distanceOffset), CurrentOwner->GetActorForwardVector().Rotation());
 		FTransform GrabbedTransform = PhysicsHandle->GrabbedComponent->GetComponentTransform();
 		GrabbedItemComponent->GetOwner()->SetActorLocation(GrabbedItemComponent->GetComponentLocation());
-
 	}
 }
 

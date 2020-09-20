@@ -40,7 +40,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item", meta = (UIMin = 0.0001, UIMax = 750.00))
 		float HeldItemAccelerationAdjust = 100.f;
-
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Held Item")
+		float DistanceToReleaseObject = 50.0f;
 	AActor* CurrentOwner = nullptr;
 	FVector StartLineTrace;
 	FVector EndofLineTrace;
@@ -53,11 +54,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Grab Distance")
 		float Reach = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Drag Helper Value") //smoothing grabbing function
-		float UpdateLocationHelper = 10.f;
-
-
-	const float distanceOffset = 5;
+	UPROPERTY(EditAnywhere, Category = "Push Helper Value")
+		float distanceOffset = 10;
 	ATeam09_DarkLightCharacter* Player = nullptr;
 
 	FHitResult GetObjectInReach();
